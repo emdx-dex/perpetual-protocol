@@ -11,7 +11,7 @@
         "test": "ts-node --files scripts/test.ts",
         "test:deploy": "ts-node --files scripts/test-deploy.ts",
         "coverage": "cross-env COVERAGE=1 ts-node --files scripts/test.ts",
-        "deploy": "ts-node --files scripts/deploy.ts $npm_config_stage",
+        "deploy": "ts-node --files scripts/deploy.ts test",
         "pull-metadata": "ts-node --files scripts/pull-metadata.ts",
         "push-metadata": "ts-node --files scripts/push-metadata.ts",
         "dev": "ts-node --files scripts/dev.ts",

@@ -2,22 +2,24 @@ import { TASK_COMPILE, TASK_COMPILE_GET_COMPILER_INPUT } from "@nomiclabs/buidle
 import { task, usePlugin } from "@nomiclabs/buidler/config"
 import {
     ARTIFACTS_DIR,
+
+    AVAX_URL,
     COVERAGE_URL,
     ETHERSCAN_API_KEY,
     GAS_PRICE,
-    HOMESTEAD_MNEMONIC,
+
     HOMESTEAD_URL,
     KOVAN_MNEMONIC,
     KOVAN_URL,
-    RINKEBY_MNEMONIC,
+
     RINKEBY_URL,
-    ROPSTEN_MNEMONIC,
+
     ROPSTEN_URL,
-    SOKOL_MNEMONIC,
+
     SOKOL_URL,
     SRC_DIR,
-    XDAI_MNEMONIC,
-    XDAI_URL,
+
+    XDAI_URL
 } from "./constants"
 import { TASK_DEPLOY_LAYER } from "./scripts/common"
 
@@ -62,45 +64,38 @@ const config = {
         },
         ropsten: {
             url: ROPSTEN_URL,
-            gasPrice: GAS_PRICE,
-            accounts: {
-                mnemonic: ROPSTEN_MNEMONIC,
-            },
+            gasPrice: Number(GAS_PRICE),
+            accounts: [KOVAN_MNEMONIC],
         },
         kovan: {
             url: KOVAN_URL,
-            gasPrice: GAS_PRICE,
-            accounts: {
-                mnemonic: KOVAN_MNEMONIC,
-            },
+            gasPrice: Number(GAS_PRICE),
+            accounts: [KOVAN_MNEMONIC],
         },
         rinkeby: {
             url: RINKEBY_URL,
-            gasPrice: GAS_PRICE,
-            accounts: {
-                mnemonic: RINKEBY_MNEMONIC,
-            },
+            gasPrice: Number(GAS_PRICE),
+            accounts: [KOVAN_MNEMONIC],
         },
         homestead: {
             url: HOMESTEAD_URL,
-            gasPrice: GAS_PRICE,
-            accounts: {
-                mnemonic: HOMESTEAD_MNEMONIC,
-            },
+            gasPrice: Number(GAS_PRICE),
+            accounts: [KOVAN_MNEMONIC],
         },
         sokol: {
             url: SOKOL_URL,
-            gasPrice: GAS_PRICE,
-            accounts: {
-                mnemonic: SOKOL_MNEMONIC,
-            },
+            gasPrice: Number(GAS_PRICE),
+            accounts: [KOVAN_MNEMONIC],
         },
         xdai: {
             url: XDAI_URL,
-            gasPrice: GAS_PRICE,
-            accounts: {
-                mnemonic: XDAI_MNEMONIC,
-            },
+            gasPrice: Number(GAS_PRICE),
+            accounts: [KOVAN_MNEMONIC],
+        },
+        avax: {
+            url: AVAX_URL,
+            gasPrice: Number(GAS_PRICE),
+            accounts: [KOVAN_MNEMONIC],
         },
     },
     solc: {

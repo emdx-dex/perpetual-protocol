@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import bre, { ethers } from "@nomiclabs/buidler"
-import { TASK_COMPILE } from "@nomiclabs/buidler/builtin-tasks/task-names"
-import { SRC_DIR } from "../constants"
+import { ethers } from "@nomiclabs/buidler"
 import { ExternalContracts, Layer } from "../scripts/common"
-import { flatten } from "../scripts/flatten"
 import {
     AmmReader,
     ChainlinkL1,
@@ -13,12 +10,11 @@ import {
     InsuranceFund,
     L2PriceFeed,
     MetaTxGateway,
-    RootBridge,
+    RootBridge
 } from "../types/ethers"
 import { ContractWrapperFactory } from "./contract/ContractWrapperFactory"
 import { DeployConfig, PriceFeedKey } from "./contract/DeployConfig"
 import { AmmInstanceName, ContractName } from "./ContractName"
-import { OzContractDeployer } from "./OzContractDeployer"
 import { SettingsDao } from "./SettingsDao"
 import { SystemMetadataDao } from "./SystemMetadataDao"
 
@@ -105,7 +101,7 @@ export class ContractPublisher {
                 async (): Promise<void> => {
                     const governance = this.externalContract.foundationGovernance!
                     console.log(`${this.layerType} batch ends, transfer proxy admin to ${governance}`)
-                    await OzContractDeployer.transferProxyAdminOwnership(governance)
+                    //await OzContractDeployer.transferProxyAdminOwnership(governance)
                     console.log(`${this.layerType} contract deployment finished.`)
                 },
             ],
@@ -383,44 +379,44 @@ export class ContractPublisher {
                 async (): Promise<void> => {
                     const governance = this.externalContract.foundationGovernance!
                     console.log(`${this.layerType} batch ends, transfer proxy admin to ${governance}`)
-                    await OzContractDeployer.transferProxyAdminOwnership(governance)
+                    //await OzContractDeployer.transferProxyAdminOwnership(governance)
                 },
             ],
             // batch 1 (optional)
             // deploy a new implementation of ClearingHouse, in order to make xdai blockscout verification works,
             // we'll deploy a flatten one in an isolated build env. then PROXY_ADMIN should upgrade proxy to the new implementation
-            [
-                async (): Promise<void> => {
-                    const filename = `${ContractName.ClearingHouse}.sol`
+            //[
+            //    async (): Promise<void> => {
+            //        const filename = `${ContractName.ClearingHouse}.sol`
 
-                    // after flatten sol file we must re-compile again
-                    await flatten(SRC_DIR, bre.config.paths.sources, filename)
-                    await bre.run(TASK_COMPILE)
+            //        // after flatten sol file we must re-compile again
+            //        await flatten(SRC_DIR, bre.config.paths.sources, filename)
+            //        await bre.run(TASK_COMPILE)
 
-                    // deploy clearing house implementation
-                    const contract = await this.factory.create<ClearingHouse>(ContractName.ClearingHouse)
-                    await contract.prepareUpgradeContract()
-                },
-            ],
+            //        // deploy clearing house implementation
+            //        const contract = await this.factory.create<ClearingHouse>(ContractName.ClearingHouse)
+            //        await contract.prepareUpgradeContract()
+            //    },
+            //],
             // batch 2 (optional)
             // deploy a new implementation of Amm, in order to make xdai blockscout verification works,
             // we'll deploy a flatten one in an isolated build env. then PROXY_ADMIN should upgrade proxy to the new implementation
-            [
-                async (): Promise<void> => {
-                    const filename = `${ContractName.Amm}.sol`
+            //[
+            //    async (): Promise<void> => {
+            //        const filename = `${ContractName.Amm}.sol`
 
-                    // after flatten sol file we must re-compile again
-                    await flatten(SRC_DIR, bre.config.paths.sources, filename)
-                    await bre.run(TASK_COMPILE)
+            //        // after flatten sol file we must re-compile again
+            //        await flatten(SRC_DIR, bre.config.paths.sources, filename)
+            //        await bre.run(TASK_COMPILE)
 
-                    // deploy amm implementation
-                    const ETHUSDC = this.factory.createAmm(AmmInstanceName.ETHUSDC)
-                    await ETHUSDC.prepareUpgradeContract()
+            //        // deploy amm implementation
+            //        const ETHUSDC = this.factory.createAmm(AmmInstanceName.ETHUSDC)
+            //        await ETHUSDC.prepareUpgradeContract()
 
-                    const BTCUSDC = this.factory.createAmm(AmmInstanceName.BTCUSDC)
-                    await BTCUSDC.prepareUpgradeContract()
-                },
-            ],
+            //        const BTCUSDC = this.factory.createAmm(AmmInstanceName.BTCUSDC)
+            //        await BTCUSDC.prepareUpgradeContract()
+            //    },
+            //],
         ],
     }
 
