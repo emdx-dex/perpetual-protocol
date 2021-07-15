@@ -7,6 +7,7 @@ import { BlockContext } from "./utils/BlockContext.sol";
 import { PerpFiOwnableUpgrade } from "./utils/PerpFiOwnableUpgrade.sol";
 import { RootBridge } from "./bridge/ethereum/RootBridge.sol";
 import { Decimal, SafeMath } from "./utils/Decimal.sol";
+import { IPriceFeed } from "./interface/IPriceFeed.sol";
 
 contract ChainlinkL1 is PerpFiOwnableUpgrade, BlockContext {
     using SafeMath for uint256;
@@ -104,14 +105,14 @@ contract ChainlinkL1 is PerpFiOwnableUpgrade, BlockContext {
         uint8 decimals = aggregator.decimals();
 
         Decimal.decimal memory decimalPrice = Decimal.decimal(formatDecimals(uint256(price), decimals));
-        bytes32 messageId = rootBridge.updatePriceFeed(
-            priceFeedL2Address,
+
+        IPriceFeed(priceFeedL2Address).setLatestData(
             _priceFeedKey,
-            decimalPrice,
+            decimalPrice.toUint(),
             timestamp,
             roundId
         );
-        emit PriceUpdateMessageIdSent(messageId);
+
         emit PriceUpdated(roundId, decimalPrice.toUint(), timestamp);
 
         prevTimestampMap[_priceFeedKey] = timestamp;

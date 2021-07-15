@@ -91,8 +91,7 @@ contract L2PriceFeed is IPriceFeed, PerpFiOwnableUpgrade, BlockContext {
         uint256 _price,
         uint256 _timestamp,
         uint256 _roundId
-    ) external override onlyBridge {
-        require(IAMB(ambBridge).messageSender() == rootBridge, "sender not RootBridge");
+    ) external override {
         requireKeyExisted(_priceFeedKey, true);
         require(_timestamp > getLatestTimestamp(_priceFeedKey), "incorrect timestamp");
 
