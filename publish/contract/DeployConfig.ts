@@ -9,6 +9,7 @@ const DEFAULT_DIGITS = BigNumber.from(10).pow(18)
 export enum PriceFeedKey {
     BTC = "BTC",
     ETH = "ETH",
+    AVAX = "AVAX",
 }
 
 // amm
@@ -84,6 +85,32 @@ export const ETH_USD_AMM: AmmConfig = {
     },
 }
 
+export const AVAX_USD_AMM: AmmConfig = {
+    deployArgs: {
+        // base * price
+        quoteAssetReserve: BigNumber.from(100000).mul(DEFAULT_DIGITS),
+        baseAssetReserve: BigNumber.from(20000).mul(DEFAULT_DIGITS), // 20000 AVAX
+        tradeLimitRatio: BigNumber.from(90)
+            .mul(DEFAULT_DIGITS)
+            .div(100), // 90% trading limit ratio
+        fundingPeriod: BigNumber.from(3600), // 1 hour
+        fluctuation: BigNumber.from(12)
+            .mul(DEFAULT_DIGITS)
+            .div(1000), // 1.2%
+        priceFeedKey: PriceFeedKey.AVAX,
+        tollRatio: BigNumber.from(0)
+            .mul(DEFAULT_DIGITS)
+            .div(10000), // 0.0%
+        spreadRatio: BigNumber.from(10)
+            .mul(DEFAULT_DIGITS)
+            .div(10000), // 0.1%
+    },
+    properties: {
+        maxHoldingBaseAsset: DEFAULT_DIGITS.mul(10), // 10 AVAX ~= $5000 USD
+        openInterestNotionalCap: BigNumber.from(DEFAULT_DIGITS).mul(500000), // $500K
+    },
+}
+
 export class DeployConfig {
     // deploy
     readonly confirmations: number
@@ -106,6 +133,9 @@ export class DeployConfig {
     readonly ammConfigMap: Record<string, AmmConfig> = {
         [AmmInstanceName.BTCUSDC]: BTC_USD_AMM,
         [AmmInstanceName.ETHUSDC]: ETH_USD_AMM,
+        [AmmInstanceName.BTCUSDT]: BTC_USD_AMM,
+        [AmmInstanceName.ETHUSDT]: ETH_USD_AMM,
+        [AmmInstanceName.AVAXUSDT]: AVAX_USD_AMM,
     }
 
     constructor(stage: Stage) {
@@ -118,18 +148,20 @@ export class DeployConfig {
                 }
                 break
             case "staging":
-                this.confirmations = 5
+                this.confirmations = 1
                 this.chainlinkMap = {
-                    [PriceFeedKey.BTC]: "0xECe365B379E1dD183B20fc5f022230C044d51404",
-                    [PriceFeedKey.ETH]: "0x8A753747A1Fa494EC906cE90E9f37563A8AF630e",
+                    [PriceFeedKey.BTC]: "0x378E78509a907B1Ec5c24d9f0243BD39f7A7b007",
+                    [PriceFeedKey.ETH]: "0xf4060f80f295b34e0C2471461ba43745Aeb186d6",
+                    [PriceFeedKey.AVAX]: "0x5498BB86BC934c8D34FDA08E81D444153d0D06aD",
                 }
                 break
             case "test":
                 this.confirmations = 1
                 this.chainlinkMap = {
                     // fake address
-                    [PriceFeedKey.BTC]: "0xECe365B379E1dD183B20fc5f022230C044d51404",
-                    [PriceFeedKey.ETH]: "0x8A753747A1Fa494EC906cE90E9f37563A8AF630e",
+                    [PriceFeedKey.BTC]: "0x378E78509a907B1Ec5c24d9f0243BD39f7A7b007",
+                    [PriceFeedKey.ETH]: "0xf4060f80f295b34e0C2471461ba43745Aeb186d6",
+                    [PriceFeedKey.AVAX]: "0x5498BB86BC934c8D34FDA08E81D444153d0D06aD",
                 }
                 break
             default:

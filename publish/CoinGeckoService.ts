@@ -16,6 +16,9 @@ export class CoinGeckoService {
             case "BTC":
                 return "bitcoin"
                 break
+            case "AVAX":
+                return "avalanche-2"
+                break
             default:
                 throw new Error(`symbol=${symbol} not supported`)
         }

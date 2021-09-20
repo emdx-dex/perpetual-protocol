@@ -9,7 +9,7 @@ import {
     LayerMetadata,
     Network,
     Stage,
-    SystemMetadata,
+    SystemMetadata
 } from "../scripts/common"
 import { asyncExec } from "../scripts/helper"
 import { ContractInstanceName } from "./ContractName"
