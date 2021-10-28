@@ -12,9 +12,8 @@ import { IExchangeWrapper } from "./interface/IExchangeWrapper.sol";
 import { IInsuranceFund } from "./interface/IInsuranceFund.sol";
 import { BlockContext } from "./utils/BlockContext.sol";
 import { DecimalERC20 } from "./utils/DecimalERC20.sol";
-import { IMinter } from "./interface/IMinter.sol";
+import { IArk } from "./interface/IArk.sol";
 import { IAmm } from "./interface/IAmm.sol";
-import { IInflationMonitor } from "./interface/IInflationMonitor.sol";
 
 contract InsuranceFund is IInsuranceFund, PerpFiOwnableUpgrade, BlockContext, ReentrancyGuardUpgradeSafe, DecimalERC20 {
     using Decimal for Decimal.decimal;
@@ -39,9 +38,8 @@ contract InsuranceFund is IInsuranceFund, PerpFiOwnableUpgrade, BlockContext, Re
 
     // contract dependencies
     IExchangeWrapper public exchange;
-    IERC20 public perpToken;
-    IMinter public minter;
-    IInflationMonitor public inflationMonitor;
+    IERC20 public emdxToken;
+    IArk public ark;
     address private beneficiary;
 
     //**********************************************************//
@@ -102,9 +100,6 @@ contract InsuranceFund is IInsuranceFund, PerpFiOwnableUpgrade, BlockContext, Re
      * @dev only owner can call. Emit `ShutdownAllAmms` event
      */
     function shutdownAllAmm() external onlyOwner {
-        if (!inflationMonitor.isOverMintThreshold()) {
-            return;
-        }
         for (uint256 i; i < amms.length; i++) {
             amms[i].shutdown();
         }
@@ -131,7 +126,7 @@ contract InsuranceFund is IInsuranceFund, PerpFiOwnableUpgrade, BlockContext, Re
         if (balanceOf(_token).toUint() > 0) {
             address outputToken = getTokenWithMaxValue();
             if (outputToken == address(0)) {
-                outputToken = address(perpToken);
+                outputToken = address(emdxToken);
             }
             swapInput(_token, IERC20(outputToken), balanceOf(_token), Decimal.zero());
         }
@@ -171,13 +166,12 @@ contract InsuranceFund is IInsuranceFund, PerpFiOwnableUpgrade, BlockContext, Re
         beneficiary = _beneficiary;
     }
 
-    function setMinter(IMinter _minter) public onlyOwner {
-        minter = _minter;
-        perpToken = minter.getPerpToken();
+    function setArk(IArk _ark) public onlyOwner {
+        ark = _ark;
     }
 
-    function setInflationMonitor(IInflationMonitor _inflationMonitor) external onlyOwner {
-        inflationMonitor = _inflationMonitor;
+    function setEmdxToken(IERC20 _token) public onlyOwner {
+        emdxToken = _token;
     }
 
     function getQuoteTokenLength() public view returns (uint256) {
@@ -202,11 +196,8 @@ contract InsuranceFund is IInsuranceFund, PerpFiOwnableUpgrade, BlockContext, Re
         Decimal.decimal memory valueOfMaxValueToken = balanceOf(denominatedToken);
         for (uint256 i = 1; i < numOfQuoteTokens; i++) {
             IERC20 quoteToken = quoteTokens[i];
-            Decimal.decimal memory quoteTokenValue = exchange.getInputPrice(
-                quoteToken,
-                denominatedToken,
-                balanceOf(quoteToken)
-            );
+            Decimal.decimal memory quoteTokenValue =
+                exchange.getInputPrice(quoteToken, denominatedToken, balanceOf(quoteToken));
             if (quoteTokenValue.cmp(valueOfMaxValueToken) > 0) {
                 maxValueToken = quoteToken;
                 valueOfMaxValueToken = quoteTokenValue;
@@ -248,11 +239,8 @@ contract InsuranceFund is IInsuranceFund, PerpFiOwnableUpgrade, BlockContext, Re
         for (uint256 i = 0; i < orderedTokens.length; i++) {
             // get how many amount of quote token i is still required
             Decimal.decimal memory swappedQuoteToken;
-            Decimal.decimal memory otherQuoteRequiredAmount = exchange.getOutputPrice(
-                orderedTokens[i],
-                _quoteToken,
-                _requiredQuoteAmount
-            );
+            Decimal.decimal memory otherQuoteRequiredAmount =
+                exchange.getOutputPrice(orderedTokens[i], _quoteToken, _requiredQuoteAmount);
 
             // if balance of token i can afford the left debt, swap and return
             if (otherQuoteRequiredAmount.toUint() <= balanceOf(orderedTokens[i]).toUint()) {
@@ -265,15 +253,9 @@ contract InsuranceFund is IInsuranceFund, PerpFiOwnableUpgrade, BlockContext, Re
             _requiredQuoteAmount = _requiredQuoteAmount.subD(swappedQuoteToken);
         }
 
-        // if all the quote tokens can't afford the debt, ask staking token to mint
+        // if all the quote tokens can't afford the debt, ask ark for funds
         if (_requiredQuoteAmount.toUint() > 0) {
-            Decimal.decimal memory requiredPerpAmount = exchange.getOutputPrice(
-                perpToken,
-                _quoteToken,
-                _requiredQuoteAmount
-            );
-            minter.mintForLoss(requiredPerpAmount);
-            swapInput(perpToken, _quoteToken, requiredPerpAmount, Decimal.zero());
+            ark.withdrawForLoss(_requiredQuoteAmount, _quoteToken);
         }
     }
 
@@ -297,19 +279,13 @@ contract InsuranceFund is IInsuranceFund, PerpFiOwnableUpgrade, BlockContext, Re
         // insertion sort
         for (uint256 i = 0; i < getQuoteTokenLength(); i++) {
             IERC20 currentToken = quoteTokens[i];
-            Decimal.decimal memory currentPerpValue = exchange.getInputPrice(
-                currentToken,
-                perpToken,
-                balanceOf(currentToken)
-            );
+            Decimal.decimal memory currentQuoteTokenValue =
+                exchange.getInputPrice(currentToken, _exceptionQuoteToken, balanceOf(currentToken));
 
             for (uint256 j = i; j > 0; j--) {
-                Decimal.decimal memory subsetPerpValue = exchange.getInputPrice(
-                    tokens[j - 1],
-                    perpToken,
-                    balanceOf(tokens[j - 1])
-                );
-                if (currentPerpValue.toUint() > subsetPerpValue.toUint()) {
+                Decimal.decimal memory subsetQuoteTokenValue =
+                    exchange.getInputPrice(tokens[j - 1], _exceptionQuoteToken, balanceOf(tokens[j - 1]));
+                if (currentQuoteTokenValue.toUint() > subsetQuoteTokenValue.toUint()) {
                     tokens[j] = tokens[j - 1];
                     tokens[j - 1] = currentToken;
                 }
