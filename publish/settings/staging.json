@@ -3,25 +3,25 @@
     "layer1": {
       "chainId": 43113,
       "network": "avax",
-      "version": "8",
+      "version": "0",
       "externalContracts": {
-        "foundationGovernance": "0xfE5E335363f0B95e5Ce15040976c6Cbab331491a",
+        "foundationGovernance": "0x574366e84f74f2e913aD9A6782CE6Ac8022e16EB",
         "ambBridgeOnEth": "0xcE515F72164b1D1d4EE88cfA6188B4DeD344879e",
         "multiTokenMediatorOnEth": "0x317a38F732bEc36A1e43e634C5389B939BD6E2e3",
-        "usdc": "0xAFDa926d549a67229D8DB529638E0BAFCDb66458",
-        "perp": "0x2ae1C6F57A81caeD383658535d6312B836dE9295"
+        "usdc": "0xA34494Ab0D4a3A31d40b07De1E29fB86bC994450",
+        "perp": "0xE3BD33020E649A565a29e3f22A548Bd19E7f7915"
       }
     },
     "layer2": {
       "chainId": 43113,
       "network": "avax",
-      "version": "37",
+      "version": "0",
       "externalContracts": {
-        "foundationGovernance": "0xfE5E335363f0B95e5Ce15040976c6Cbab331491a",
+        "foundationGovernance": "0x574366e84f74f2e913aD9A6782CE6Ac8022e16EB",
         "arbitrageur": "0x574366e84f74f2e913aD9A6782CE6Ac8022e16EB",
         "ambBridgeOnXDai": "0x2069D1581Afa0C7ed31b60361b6A60Fa020A0Bfe",
         "multiTokenMediatorOnXDai": "0x14Ed4251Dfd91DDE8Ce6927474F7a015D299a998",
-        "usdc": "0xAFDa926d549a67229D8DB529638E0BAFCDb66458"
+        "usdc": "0xA34494Ab0D4a3A31d40b07De1E29fB86bC994450"
       }
     }
   }

@@ -184,9 +184,9 @@ export class ContractPublisher {
                     ).wait(this.confirmations)
                 },
                 async (): Promise<void> => {
-                    console.log("deploy ETHUSDT amm...")
+                    console.log("deploy ETHUSDC amm...")
                     const l2PriceFeedContract = this.factory.create<L2PriceFeed>(ContractName.L2PriceFeed)
-                    const ammContract = this.factory.createAmm(AmmInstanceName.ETHUSDT)
+                    const ammContract = this.factory.createAmm(AmmInstanceName.ETHUSDC)
                     const quoteTokenAddr = this.externalContract.usdc!
                     await ammContract.deployUpgradableContract(
                         this.deployConfig.ammConfigMap,
@@ -195,9 +195,9 @@ export class ContractPublisher {
                     )
                 },
                 async (): Promise<void> => {
-                    console.log("deploy BTCUSDT amm...")
+                    console.log("deploy BTCUSDC amm...")
                     const l2PriceFeedContract = this.factory.create<L2PriceFeed>(ContractName.L2PriceFeed)
-                    const ammContract = this.factory.createAmm(AmmInstanceName.BTCUSDT)
+                    const ammContract = this.factory.createAmm(AmmInstanceName.BTCUSDC)
                     const quoteTokenAddr = this.externalContract.usdc!
                     await ammContract.deployUpgradableContract(
                         this.deployConfig.ammConfigMap,
@@ -241,9 +241,9 @@ export class ContractPublisher {
                 },
                 async (): Promise<void> => {
                     console.log("set ETH amm Cap...")
-                    const amm = await this.factory.createAmm(AmmInstanceName.ETHUSDT).instance()
+                    const amm = await this.factory.createAmm(AmmInstanceName.ETHUSDC).instance()
                     const { maxHoldingBaseAsset, openInterestNotionalCap } = this.deployConfig.ammConfigMap[
-                        AmmInstanceName.ETHUSDT
+                        AmmInstanceName.ETHUSDC
                     ].properties
                     if (maxHoldingBaseAsset.gt(0)) {
                         await (
@@ -257,21 +257,21 @@ export class ContractPublisher {
                 async (): Promise<void> => {
                     console.log("ETH amm.setCounterParty...")
                     const clearingHouseContract = this.factory.create<ClearingHouse>(ContractName.ClearingHouse)
-                    const amm = await this.factory.createAmm(AmmInstanceName.ETHUSDT).instance()
+                    const amm = await this.factory.createAmm(AmmInstanceName.ETHUSDC).instance()
                     await (await amm.setCounterParty(clearingHouseContract.address!)).wait(this.confirmations)
                 },
                 async (): Promise<void> => {
                     console.log("insuranceFund.add ETH amm...")
                     const insuranceFundContract = this.factory.create<InsuranceFund>(ContractName.InsuranceFund)
-                    const ammContract = this.factory.createAmm(AmmInstanceName.ETHUSDT)
+                    const ammContract = this.factory.createAmm(AmmInstanceName.ETHUSDC)
                     const insuranceFund = await insuranceFundContract.instance()
                     await (await insuranceFund.addAmm(ammContract.address!)).wait(this.confirmations)
                 },
                 async (): Promise<void> => {
                     console.log("set BTC amm Cap...")
-                    const amm = await this.factory.createAmm(AmmInstanceName.BTCUSDT).instance()
+                    const amm = await this.factory.createAmm(AmmInstanceName.BTCUSDC).instance()
                     const { maxHoldingBaseAsset, openInterestNotionalCap } = this.deployConfig.ammConfigMap[
-                        AmmInstanceName.BTCUSDT
+                        AmmInstanceName.BTCUSDC
                     ].properties
                     if (maxHoldingBaseAsset.gt(0)) {
                         await (
@@ -285,13 +285,13 @@ export class ContractPublisher {
                 async (): Promise<void> => {
                     console.log("BTC amm.setCounterParty...")
                     const clearingHouseContract = this.factory.create<ClearingHouse>(ContractName.ClearingHouse)
-                    const amm = await this.factory.createAmm(AmmInstanceName.BTCUSDT).instance()
+                    const amm = await this.factory.createAmm(AmmInstanceName.BTCUSDC).instance()
                     await (await amm.setCounterParty(clearingHouseContract.address!)).wait(this.confirmations)
                 },
                 async (): Promise<void> => {
                     console.log("insuranceFund.add BTC amm...")
                     const insuranceFundContract = this.factory.create<InsuranceFund>(ContractName.InsuranceFund)
-                    const ammContract = this.factory.createAmm(AmmInstanceName.BTCUSDT)
+                    const ammContract = this.factory.createAmm(AmmInstanceName.BTCUSDC)
                     const insuranceFund = await insuranceFundContract.instance()
                     await (await insuranceFund.addAmm(ammContract.address!)).wait(this.confirmations)
                 },
@@ -306,12 +306,12 @@ export class ContractPublisher {
                 },
                 async (): Promise<void> => {
                     console.log("opening Amm ETHUSDC...")
-                    const ethUsdc = await this.factory.createAmm(AmmInstanceName.ETHUSDT).instance()
+                    const ethUsdc = await this.factory.createAmm(AmmInstanceName.ETHUSDC).instance()
                     await (await ethUsdc.setOpen(true)).wait(this.confirmations)
                 },
                 async (): Promise<void> => {
                     console.log("opening Amm BTCUSDC...")
-                    const btcUsdc = await this.factory.createAmm(AmmInstanceName.BTCUSDT).instance()
+                    const btcUsdc = await this.factory.createAmm(AmmInstanceName.BTCUSDC).instance()
                     await (await btcUsdc.setOpen(true)).wait(this.confirmations)
                 },
                 async (): Promise<void> => {
@@ -365,7 +365,7 @@ export class ContractPublisher {
                     console.log(
                         `transferring ETHUSDC owner to governance=${gov}...please remember to claim the ownership`,
                     )
-                    const ETHUSDC = await this.factory.createAmm(AmmInstanceName.ETHUSDT).instance()
+                    const ETHUSDC = await this.factory.createAmm(AmmInstanceName.ETHUSDC).instance()
                     await (await ETHUSDC.setOwner(gov)).wait(this.confirmations)
                 },
                 async (): Promise<void> => {
@@ -373,7 +373,7 @@ export class ContractPublisher {
                     console.log(
                         `transferring BTCUSDC owner to governance=${gov}...please remember to claim the ownership`,
                     )
-                    const BTCUSDC = await this.factory.createAmm(AmmInstanceName.BTCUSDT).instance()
+                    const BTCUSDC = await this.factory.createAmm(AmmInstanceName.BTCUSDC).instance()
                     await (await BTCUSDC.setOwner(gov)).wait(this.confirmations)
                 },
                 //async (): Promise<void> => {
@@ -382,9 +382,9 @@ export class ContractPublisher {
                 //    await OzContractDeployer.transferProxyAdminOwnership(governance)
                 //},
                 async (): Promise<void> => {
-                    console.log("deploy AVAXUSDT amm...")
+                    console.log("deploy AVAXUSDC amm...")
                     const l2PriceFeedContract = this.factory.create<L2PriceFeed>(ContractName.L2PriceFeed)
-                    const ammContract = this.factory.createAmm(AmmInstanceName.AVAXUSDT)
+                    const ammContract = this.factory.createAmm(AmmInstanceName.AVAXUSDC)
                     const quoteTokenAddr = this.externalContract.usdc!
                     await ammContract.deployUpgradableContract(
                         this.deployConfig.ammConfigMap,
@@ -401,9 +401,9 @@ export class ContractPublisher {
                 },
                 async (): Promise<void> => {
                     console.log("set AVAX amm Cap...")
-                    const amm = await this.factory.createAmm(AmmInstanceName.AVAXUSDT).instance()
+                    const amm = await this.factory.createAmm(AmmInstanceName.AVAXUSDC).instance()
                     const { maxHoldingBaseAsset, openInterestNotionalCap } = this.deployConfig.ammConfigMap[
-                        AmmInstanceName.AVAXUSDT
+                        AmmInstanceName.AVAXUSDC
                     ].properties
                     if (maxHoldingBaseAsset.gt(0)) {
                         await (
@@ -417,19 +417,19 @@ export class ContractPublisher {
                 async (): Promise<void> => {
                     console.log("AVAX amm.setCounterParty...")
                     const clearingHouseContract = this.factory.create<ClearingHouse>(ContractName.ClearingHouse)
-                    const amm = await this.factory.createAmm(AmmInstanceName.AVAXUSDT).instance()
+                    const amm = await this.factory.createAmm(AmmInstanceName.AVAXUSDC).instance()
                     await (await amm.setCounterParty(clearingHouseContract.address!)).wait(this.confirmations)
                 },
                 async (): Promise<void> => {
                     console.log("insuranceFund.add AVAX amm...")
                     const insuranceFundContract = this.factory.create<InsuranceFund>(ContractName.InsuranceFund)
-                    const ammContract = this.factory.createAmm(AmmInstanceName.AVAXUSDT)
+                    const ammContract = this.factory.createAmm(AmmInstanceName.AVAXUSDC)
                     const insuranceFund = await insuranceFundContract.instance()
                     await (await insuranceFund.addAmm(ammContract.address!)).wait(this.confirmations)
                 },
                 async (): Promise<void> => {
                     console.log("opening Amm AVAXUSDC...")
-                    const ethUsdc = await this.factory.createAmm(AmmInstanceName.AVAXUSDT).instance()
+                    const ethUsdc = await this.factory.createAmm(AmmInstanceName.AVAXUSDC).instance()
                     await (await ethUsdc.setOpen(true)).wait(this.confirmations)
                 },
             ],
@@ -461,10 +461,10 @@ export class ContractPublisher {
             //        await bre.run(TASK_COMPILE)
 
             //        // deploy amm implementation
-            //        const ETHUSDC = this.factory.createAmm(AmmInstanceName.ETHUSDT)
+            //        const ETHUSDC = this.factory.createAmm(AmmInstanceName.ETHUSDC)
             //        await ETHUSDC.prepareUpgradeContract()
 
-            //        const BTCUSDC = this.factory.createAmm(AmmInstanceName.BTCUSDT)
+            //        const BTCUSDC = this.factory.createAmm(AmmInstanceName.BTCUSDC)
             //        await BTCUSDC.prepareUpgradeContract()
             //    },
             //],

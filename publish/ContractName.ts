@@ -4,6 +4,7 @@ export enum AmmInstanceName {
     BTCUSDT = "BTCUSDT",
     ETHUSDT = "ETHUSDT",
     AVAXUSDT = "AVAXUSDT",
+    AVAXUSDC = "AVAXUSDC",
 }
 
 export enum ContractName {
@@ -18,6 +19,7 @@ export enum ContractName {
     AmmReader = "AmmReader",
     ClientBridge = "ClientBridge",
     RootBridge = "RootBridge",
+    Ark = "Ark",
 }
 
 export type ContractInstanceName = ContractName | AmmInstanceName

@@ -7,8 +7,9 @@ import { IERC20 } from "@openzeppelin/contracts-ethereum-package/contracts/token
 import { PerpFiOwnableUpgrade } from "./utils/PerpFiOwnableUpgrade.sol";
 import { DecimalERC20 } from "./utils/DecimalERC20.sol";
 import { BlockContext } from "./utils/BlockContext.sol";
+import { IArk } from "./interface/IArk.sol";
 
-contract Ark is PerpFiOwnableUpgrade {
+contract Ark is IArk, PerpFiOwnableUpgrade, BlockContext, DecimalERC20 {
     using Decimal for Decimal.decimal;
     using SafeMath for uint256;
 
@@ -33,7 +34,7 @@ contract Ark is PerpFiOwnableUpgrade {
     //
 
     // withdraw for covering unexpected loss, only insurance fund
-    function withdrawForLoss(Decimal.decimal memory _amount, address _quoteToken) public override {
+    function withdrawForLoss(Decimal.decimal memory _amount, IERC20 _quoteToken) public override {
         require(insuranceFund == _msgSender(), "only insuranceFund");
         require(_balanceOf(_quoteToken, address(this)).toUint() >= _amount.toUint(), "insufficient funds");
 
@@ -47,7 +48,7 @@ contract Ark is PerpFiOwnableUpgrade {
         }
         // store the widthraw history
         withdrawnTokenHistory.push(
-            WithdrawnForLoss({ timestamp: _blockTimestamp(), cumulativeAmount: cumulativeAmount })
+            WithdrawnToken({ timestamp: _blockTimestamp(), cumulativeAmount: cumulativeAmount })
         );
 
         _transfer(_quoteToken, _msgSender(), _amount);
@@ -55,9 +56,9 @@ contract Ark is PerpFiOwnableUpgrade {
     }
 
     // only owner can withdraw funds anytime
-    function claimTokens(address _to, address _token) external onlyOwner {
+    function claimTokens(address payable _to, IERC20 _token) external onlyOwner {
         require(_to != address(0), "to address is required");
-        if (_token == address(0)) {
+        if (_token == IERC20(0)) {
             _to.transfer(address(this).balance);
         } else {
             _transfer(_token, _to, _balanceOf(_token, address(this)));

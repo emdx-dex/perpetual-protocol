@@ -136,6 +136,7 @@ export class DeployConfig {
         [AmmInstanceName.BTCUSDT]: BTC_USD_AMM,
         [AmmInstanceName.ETHUSDT]: ETH_USD_AMM,
         [AmmInstanceName.AVAXUSDT]: AVAX_USD_AMM,
+        [AmmInstanceName.AVAXUSDC]: AVAX_USD_AMM,
     }
 
     constructor(stage: Stage) {
