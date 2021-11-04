@@ -2,8 +2,7 @@
 import { ethers } from "@nomiclabs/buidler"
 import { ExternalContracts, Layer } from "../scripts/common"
 import {
-    AmmReader,
-    ChainlinkL1,
+    AmmReader, Ark, ChainlinkL1,
     ClearingHouse,
     ClearingHouseViewer,
     ClientBridge,
@@ -132,6 +131,14 @@ export class ContractPublisher {
                 async (): Promise<void> => {
                     console.log("deploy insuranceFund...")
                     await this.factory.create<InsuranceFund>(ContractName.InsuranceFund).deployUpgradableContract()
+                },
+                async (): Promise<void> => {
+                    console.log("deploy ark...")
+                    const ark = await this.factory.create<Ark>(ContractName.Ark).deployUpgradableContract()
+                    const insuranceFund = await this.factory
+                        .create<InsuranceFund>(ContractName.InsuranceFund)
+                        .instance()
+                    await (await ark.setInsuranceFund(insuranceFund.address!)).wait(this.confirmations)
                 },
                 async (): Promise<void> => {
                     console.log("deploy L2PriceFeed")

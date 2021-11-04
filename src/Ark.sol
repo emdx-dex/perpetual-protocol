@@ -2,6 +2,9 @@
 pragma solidity 0.6.9;
 pragma experimental ABIEncoderV2;
 
+import {
+    ReentrancyGuardUpgradeSafe
+} from "@openzeppelin/contracts-ethereum-package/contracts/utils/ReentrancyGuard.sol";
 import { Decimal, SafeMath } from "./utils/Decimal.sol";
 import { IERC20 } from "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol";
 import { PerpFiOwnableUpgrade } from "./utils/PerpFiOwnableUpgrade.sol";
@@ -9,7 +12,7 @@ import { DecimalERC20 } from "./utils/DecimalERC20.sol";
 import { BlockContext } from "./utils/BlockContext.sol";
 import { IArk } from "./interface/IArk.sol";
 
-contract Ark is IArk, PerpFiOwnableUpgrade, BlockContext, DecimalERC20 {
+contract Ark is IArk, PerpFiOwnableUpgrade, BlockContext, ReentrancyGuardUpgradeSafe, DecimalERC20 {
     using Decimal for Decimal.decimal;
     using SafeMath for uint256;
 
@@ -32,6 +35,10 @@ contract Ark is IArk, PerpFiOwnableUpgrade, BlockContext, DecimalERC20 {
     //
     // FUNCTIONS
     //
+    function initialize() external initializer {
+        __Ownable_init();
+        __ReentrancyGuard_init();
+    }
 
     // withdraw for covering unexpected loss, only insurance fund
     function withdrawForLoss(Decimal.decimal memory _amount, IERC20 _quoteToken) public override {

@@ -1,25 +1,12 @@
 import { TASK_COMPILE, TASK_COMPILE_GET_COMPILER_INPUT } from "@nomiclabs/buidler/builtin-tasks/task-names"
 import { task, usePlugin } from "@nomiclabs/buidler/config"
 import {
-    ARTIFACTS_DIR,
-
-    AVAX_URL,
+    ARTIFACTS_DIR, AVAX_MNEMONIC, AVAX_URL,
     COVERAGE_URL,
     ETHERSCAN_API_KEY,
-    GAS_PRICE,
-
-    HOMESTEAD_URL,
-    KOVAN_MNEMONIC,
-    KOVAN_URL,
-
-    RINKEBY_URL,
-
-    ROPSTEN_URL,
-
-    SOKOL_URL,
-    SRC_DIR,
-
-    XDAI_URL
+    GAS_PRICE, HOMESTEAD_MNEMONIC, HOMESTEAD_URL,
+    KOVAN_MNEMONIC, KOVAN_URL, RINKEBY_MNEMONIC, RINKEBY_URL, ROPSTEN_MNEMONIC, ROPSTEN_URL, SOKOL_MNEMONIC, SOKOL_URL,
+    SRC_DIR, XDAI_MNEMONIC, XDAI_URL
 } from "./constants"
 import { TASK_DEPLOY_LAYER } from "./scripts/common"
 
@@ -65,7 +52,7 @@ const config = {
         ropsten: {
             url: ROPSTEN_URL,
             gasPrice: Number(GAS_PRICE),
-            accounts: [KOVAN_MNEMONIC],
+            accounts: [ROPSTEN_MNEMONIC],
         },
         kovan: {
             url: KOVAN_URL,
@@ -75,27 +62,27 @@ const config = {
         rinkeby: {
             url: RINKEBY_URL,
             gasPrice: Number(GAS_PRICE),
-            accounts: [KOVAN_MNEMONIC],
+            accounts: [RINKEBY_MNEMONIC],
         },
         homestead: {
             url: HOMESTEAD_URL,
             gasPrice: Number(GAS_PRICE),
-            accounts: [KOVAN_MNEMONIC],
+            accounts: [HOMESTEAD_MNEMONIC],
         },
         sokol: {
             url: SOKOL_URL,
             gasPrice: Number(GAS_PRICE),
-            accounts: [KOVAN_MNEMONIC],
+            accounts: [SOKOL_MNEMONIC],
         },
         xdai: {
             url: XDAI_URL,
             gasPrice: Number(GAS_PRICE),
-            accounts: [KOVAN_MNEMONIC],
+            accounts: [XDAI_MNEMONIC],
         },
         avax: {
             url: AVAX_URL,
             gasPrice: Number(GAS_PRICE),
-            accounts: [KOVAN_MNEMONIC],
+            accounts: [AVAX_MNEMONIC],
         },
     },
     solc: {
