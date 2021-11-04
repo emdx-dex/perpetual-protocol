@@ -10,8 +10,8 @@ import { PerpFiOwnableUpgrade } from "./utils/PerpFiOwnableUpgrade.sol";
 contract L2PriceFeed is IPriceFeed, PerpFiOwnableUpgrade, BlockContext {
     using SafeMath for uint256;
 
-    modifier onlyBridge() {
-        require(_msgSender() == ambBridge, "!ambBridge");
+    modifier onlyChainlink() {
+        require(_msgSender() == chainlinkContract, "!chainlinkContract");
         _;
     }
 
@@ -32,8 +32,7 @@ contract L2PriceFeed is IPriceFeed, PerpFiOwnableUpgrade, BlockContext {
     //    Can not change the order of below state variables     //
     //**********************************************************//
 
-    address public ambBridge;
-    address public rootBridge;
+    address public chainlinkContract;
 
     // key by currency symbol, eg ETH
     mapping(bytes32 => PriceFeed) public priceFeedMap;
@@ -51,10 +50,8 @@ contract L2PriceFeed is IPriceFeed, PerpFiOwnableUpgrade, BlockContext {
     //
     // FUNCTIONS
     //
-    function initialize(address _ambBridge, address _rootBridge) public initializer {
+    function initialize() public initializer {
         __Ownable_init();
-        ambBridge = _ambBridge;
-        rootBridge = _rootBridge;
     }
 
     function addAggregator(bytes32 _priceFeedKey) external onlyOwner {
@@ -77,9 +74,9 @@ contract L2PriceFeed is IPriceFeed, PerpFiOwnableUpgrade, BlockContext {
         }
     }
 
-    function setRootBridge(address _rootBridge) external onlyOwner {
-        require(_rootBridge != address(0), "addr is empty");
-        rootBridge = _rootBridge;
+    function setChainlink(address _chainlinkContract) external onlyOwner {
+        require(_chainlinkContract != address(0), "addr is empty");
+        chainlinkContract = _chainlinkContract;
     }
 
     //
@@ -91,7 +88,7 @@ contract L2PriceFeed is IPriceFeed, PerpFiOwnableUpgrade, BlockContext {
         uint256 _price,
         uint256 _timestamp,
         uint256 _roundId
-    ) external override {
+    ) external override onlyChainlink {
         requireKeyExisted(_priceFeedKey, true);
         require(_timestamp > getLatestTimestamp(_priceFeedKey), "incorrect timestamp");
 
