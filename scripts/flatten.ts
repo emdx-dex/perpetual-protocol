@@ -45,9 +45,27 @@ export async function flatten(fromDir: string, toDir: string, filename: string):
 
 if (require.main === module) {
     flatten("./src", "./flattened/src", "ClearingHouse.sol")
-        .then(() => process.exit(0))
+        .then(() => {
+            flatten("./src", "./flattened/src", "InsuranceFund.sol")
+            .then(() => {
+                flatten("./src", "./flattened/src", "Ark.sol")
+                .then(() => process.exit(0))
+                .catch(error => {
+                    console.error(error)
+                    process.exit(1)
+                });
+            })
+            .catch(error => {
+                console.error(error)
+                process.exit(1)
+            })
+        })
         .catch(error => {
             console.error(error)
             process.exit(1)
         })
+
+
+
+
 }

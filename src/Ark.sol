@@ -28,7 +28,7 @@ contract Ark is IArk, PerpFiOwnableUpgrade, BlockContext, ReentrancyGuardUpgrade
 
     address public insuranceFund;
     // An array of token withdraw timestamp and cumulative amount
-    WithdrawnToken[] private withdrawnTokenHistory;
+    WithdrawnToken[] public withdrawnTokenHistory;
 
     uint256[50] private __gap;
 
@@ -45,6 +45,9 @@ contract Ark is IArk, PerpFiOwnableUpgrade, BlockContext, ReentrancyGuardUpgrade
         require(insuranceFund == _msgSender(), "only insuranceFund");
         require(_balanceOf(_quoteToken, address(this)).toUint() >= _amount.toUint(), "insufficient funds");
 
+        // the smallest expression in terms of decimals of the token is added to
+        // _amount because the _transfer method of DecimalERC20 rounds down
+        _amount = _amount.addD(_toDecimal(_quoteToken, 1));
         // stores timestamp and cumulative amount of withdrawn token
         Decimal.decimal memory cumulativeAmount;
         uint256 len = withdrawnTokenHistory.length;

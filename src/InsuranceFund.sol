@@ -8,7 +8,6 @@ import {
 } from "@openzeppelin/contracts-ethereum-package/contracts/utils/ReentrancyGuard.sol";
 import { IERC20 } from "@openzeppelin/contracts-ethereum-package/contracts/token/ERC20/IERC20.sol";
 import { Decimal } from "./utils/Decimal.sol";
-import { IExchangeWrapper } from "./interface/IExchangeWrapper.sol";
 import { IInsuranceFund } from "./interface/IInsuranceFund.sol";
 import { BlockContext } from "./utils/BlockContext.sol";
 import { DecimalERC20 } from "./utils/DecimalERC20.sol";
@@ -37,8 +36,6 @@ contract InsuranceFund is IInsuranceFund, PerpFiOwnableUpgrade, BlockContext, Re
     IERC20[] public quoteTokens;
 
     // contract dependencies
-    IExchangeWrapper public exchange;
-    IERC20 public emdxToken;
     IArk public ark;
     address private beneficiary;
 
@@ -121,14 +118,9 @@ contract InsuranceFund is IInsuranceFund, PerpFiOwnableUpgrade, BlockContext, Re
             }
         }
 
-        // exchange and transfer to the quoteToken with the most value. if no more quoteToken, buy protocol tokens
-        // TODO use curve or balancer fund token for pooling the fees will be less painful
+        // transfer all fund to ark
         if (balanceOf(_token).toUint() > 0) {
-            address outputToken = getTokenWithMaxValue();
-            if (outputToken == address(0)) {
-                outputToken = address(emdxToken);
-            }
-            swapInput(_token, IERC20(outputToken), balanceOf(_token), Decimal.zero());
+            _transfer(_token, address(ark), balanceOf(_token));
         }
 
         emit TokenRemoved(address(_token));
@@ -145,7 +137,7 @@ contract InsuranceFund is IInsuranceFund, PerpFiOwnableUpgrade, BlockContext, Re
         Decimal.decimal memory quoteBalance = balanceOf(_quoteToken);
         if (_amount.toUint() > quoteBalance.toUint()) {
             Decimal.decimal memory insufficientAmount = _amount.subD(quoteBalance);
-            swapEnoughQuoteAmount(_quoteToken, insufficientAmount);
+            ark.withdrawForLoss(insufficientAmount, _quoteToken);
             quoteBalance = balanceOf(_quoteToken);
         }
         require(quoteBalance.toUint() >= _amount.toUint(), "Fund not enough");
@@ -158,10 +150,6 @@ contract InsuranceFund is IInsuranceFund, PerpFiOwnableUpgrade, BlockContext, Re
     // SETTER
     //
 
-    function setExchange(IExchangeWrapper _exchange) external onlyOwner {
-        exchange = _exchange;
-    }
-
     function setBeneficiary(address _beneficiary) external onlyOwner {
         beneficiary = _beneficiary;
     }
@@ -170,93 +158,8 @@ contract InsuranceFund is IInsuranceFund, PerpFiOwnableUpgrade, BlockContext, Re
         ark = _ark;
     }
 
-    function setEmdxToken(IERC20 _token) public onlyOwner {
-        emdxToken = _token;
-    }
-
     function getQuoteTokenLength() public view returns (uint256) {
         return quoteTokens.length;
-    }
-
-    //
-    // INTERNAL FUNCTIONS
-    //
-
-    function getTokenWithMaxValue() internal view returns (address) {
-        uint256 numOfQuoteTokens = quoteTokens.length;
-        if (numOfQuoteTokens == 0) {
-            return address(0);
-        }
-        if (numOfQuoteTokens == 1) {
-            return address(quoteTokens[0]);
-        }
-
-        IERC20 denominatedToken = quoteTokens[0];
-        IERC20 maxValueToken = denominatedToken;
-        Decimal.decimal memory valueOfMaxValueToken = balanceOf(denominatedToken);
-        for (uint256 i = 1; i < numOfQuoteTokens; i++) {
-            IERC20 quoteToken = quoteTokens[i];
-            Decimal.decimal memory quoteTokenValue =
-                exchange.getInputPrice(quoteToken, denominatedToken, balanceOf(quoteToken));
-            if (quoteTokenValue.cmp(valueOfMaxValueToken) > 0) {
-                maxValueToken = quoteToken;
-                valueOfMaxValueToken = quoteTokenValue;
-            }
-        }
-        return address(maxValueToken);
-    }
-
-    function swapInput(
-        IERC20 inputToken,
-        IERC20 outputToken,
-        Decimal.decimal memory inputTokenSold,
-        Decimal.decimal memory minOutputTokenBought
-    ) internal returns (Decimal.decimal memory received) {
-        if (inputTokenSold.toUint() == 0) {
-            return Decimal.zero();
-        }
-        _approve(inputToken, address(exchange), inputTokenSold);
-        received = exchange.swapInput(inputToken, outputToken, inputTokenSold, minOutputTokenBought, Decimal.zero());
-        require(received.toUint() > 0, "Exchange swap error");
-    }
-
-    function swapOutput(
-        IERC20 inputToken,
-        IERC20 outputToken,
-        Decimal.decimal memory outputTokenBought,
-        Decimal.decimal memory maxInputTokenSold
-    ) internal returns (Decimal.decimal memory received) {
-        if (outputTokenBought.toUint() == 0) {
-            return Decimal.zero();
-        }
-        _approve(inputToken, address(exchange), maxInputTokenSold);
-        received = exchange.swapOutput(inputToken, outputToken, outputTokenBought, maxInputTokenSold, Decimal.zero());
-        require(received.toUint() > 0, "Exchange swap error");
-    }
-
-    function swapEnoughQuoteAmount(IERC20 _quoteToken, Decimal.decimal memory _requiredQuoteAmount) internal {
-        IERC20[] memory orderedTokens = getOrderedQuoteTokens(_quoteToken);
-        for (uint256 i = 0; i < orderedTokens.length; i++) {
-            // get how many amount of quote token i is still required
-            Decimal.decimal memory swappedQuoteToken;
-            Decimal.decimal memory otherQuoteRequiredAmount =
-                exchange.getOutputPrice(orderedTokens[i], _quoteToken, _requiredQuoteAmount);
-
-            // if balance of token i can afford the left debt, swap and return
-            if (otherQuoteRequiredAmount.toUint() <= balanceOf(orderedTokens[i]).toUint()) {
-                swappedQuoteToken = swapInput(orderedTokens[i], _quoteToken, otherQuoteRequiredAmount, Decimal.zero());
-                return;
-            }
-
-            // if balance of token i can't afford the left debt, show hand and move to the next one
-            swappedQuoteToken = swapInput(orderedTokens[i], _quoteToken, balanceOf(orderedTokens[i]), Decimal.zero());
-            _requiredQuoteAmount = _requiredQuoteAmount.subD(swappedQuoteToken);
-        }
-
-        // if all the quote tokens can't afford the debt, ask ark for funds
-        if (_requiredQuoteAmount.toUint() > 0) {
-            ark.withdrawForLoss(_requiredQuoteAmount, _quoteToken);
-        }
     }
 
     //
@@ -272,36 +175,6 @@ contract InsuranceFund is IInsuranceFund, PerpFiOwnableUpgrade, BlockContext, Re
 
     function isQuoteTokenExisted(IERC20 _token) internal view returns (bool) {
         return quoteTokenMap[address(_token)];
-    }
-
-    function getOrderedQuoteTokens(IERC20 _exceptionQuoteToken) internal view returns (IERC20[] memory orderedTokens) {
-        IERC20[] memory tokens = quoteTokens;
-        // insertion sort
-        for (uint256 i = 0; i < getQuoteTokenLength(); i++) {
-            IERC20 currentToken = quoteTokens[i];
-            Decimal.decimal memory currentQuoteTokenValue =
-                exchange.getInputPrice(currentToken, _exceptionQuoteToken, balanceOf(currentToken));
-
-            for (uint256 j = i; j > 0; j--) {
-                Decimal.decimal memory subsetQuoteTokenValue =
-                    exchange.getInputPrice(tokens[j - 1], _exceptionQuoteToken, balanceOf(tokens[j - 1]));
-                if (currentQuoteTokenValue.toUint() > subsetQuoteTokenValue.toUint()) {
-                    tokens[j] = tokens[j - 1];
-                    tokens[j - 1] = currentToken;
-                }
-            }
-        }
-
-        orderedTokens = new IERC20[](tokens.length - 1);
-        uint256 j;
-        for (uint256 i = 0; i < tokens.length; i++) {
-            // jump to the next token
-            if (tokens[i] == _exceptionQuoteToken) {
-                continue;
-            }
-            orderedTokens[j] = tokens[i];
-            j++;
-        }
     }
 
     function balanceOf(IERC20 _quoteToken) internal view returns (Decimal.decimal memory) {

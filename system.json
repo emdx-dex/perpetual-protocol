@@ -1,67 +1,58 @@
 {
   "layers": {
     "layer1": {
-      "contracts": {
-        "RootBridge": {
-          "name": "RootBridge",
-          "address": "0x47dED399a5BF843F1fFBe9940d5af0541C727687"
-        },
-        "ChainlinkL1": {
-          "name": "ChainlinkL1",
-          "address": "0x8c660C16341D30AEFAcF8adC962CF9F480813965"
-        }
-      },
+      "contracts": {},
       "accounts": [],
       "network": "avax",
       "externalContracts": {
         "foundationGovernance": "0xfE5E335363f0B95e5Ce15040976c6Cbab331491a",
         "ambBridgeOnEth": "0xcE515F72164b1D1d4EE88cfA6188B4DeD344879e",
         "multiTokenMediatorOnEth": "0x317a38F732bEc36A1e43e634C5389B939BD6E2e3",
-        "usdc": "0xAFDa926d549a67229D8DB529638E0BAFCDb66458",
-        "perp": "0x2ae1C6F57A81caeD383658535d6312B836dE9295"
+        "usdc": "0x0f2A5D18aD37395266c0b59e3dfCFe790a0EE8E1",
+        "perp": "0xc8B98E0e1E095312dDBC372C2D7cFEC3073B4E51"
       }
     },
     "layer2": {
       "contracts": {
-        "MetaTxGateway": {
-          "name": "MetaTxGateway",
-          "address": "0x33d80EE5aD6EbCf53866190bc031cfF989305089"
-        },
-        "ClientBridge": {
-          "name": "ClientBridge",
-          "address": "0x4e3Cb7e8Fd7c11c048479055D8f47a930A2Ff3B3"
-        },
         "InsuranceFund": {
           "name": "InsuranceFund",
-          "address": "0xa5c81a2f80fc550556075Bafe786A03A31Fd8117"
+          "address": "0x14e852487881dfa47bc05A97D10296DE632bc19b"
+        },
+        "Ark": {
+          "name": "Ark",
+          "address": "0x599912A83ea62c9E205C8456CB43a250dea8B8d6"
         },
         "L2PriceFeed": {
           "name": "L2PriceFeed",
-          "address": "0x1caA15e8824F9741b91FD031Aa48ff270eEfA5e8"
+          "address": "0xBF4BDcaFf9ce27AFD1a7ab76213c381205002716"
+        },
+        "ChainlinkL1": {
+          "name": "ChainlinkL1",
+          "address": "0xcC4bbA2D2E5d126088090b4414f1cb490C09a7e2"
         },
         "ClearingHouse": {
           "name": "ClearingHouse",
-          "address": "0xd43b9629E283a5F49460daE1031eF65504e918Af"
+          "address": "0x1969d219542ac72612d6cA6438a216350E8d0f3d"
         },
-        "ETHUSDT": {
+        "ETHUSDC": {
           "name": "Amm",
-          "address": "0xC96f196BB95e2e482f90411eA788aA626FCD57D7"
+          "address": "0x0C89d87f8781bFB96ceA3456b5F7C2C9684a0726"
         },
-        "BTCUSDT": {
+        "BTCUSDC": {
           "name": "Amm",
-          "address": "0xB640036Ed6Ec25ae96309ba6a6802C1907326D8e"
+          "address": "0x08C3069541913775A246e9e5db3ecFA13763BB68"
         },
         "ClearingHouseViewer": {
           "name": "ClearingHouseViewer",
-          "address": "0x3943F75E05bC3bEdcaf81642d4EcD7CaD9ECe49D"
+          "address": "0xE5C3DD23e2c6A9F353686592EDb687928b6077dA"
         },
         "AmmReader": {
           "name": "AmmReader",
-          "address": "0x03c161dC7A462C7BF943f45Ce1E85840e15Fe98D"
+          "address": "0xaD75090133c452856949d036cF82A02570e190A0"
         },
-        "AVAXUSDT": {
+        "AVAXUSDC": {
           "name": "Amm",
-          "address": "0xA4330ef7e184B8862Bc4c13Fa1b70a7Ccb0260fD"
+          "address": "0xF888213c6430B096468abd456840A0bEf2b9D242"
         }
       },
       "accounts": [],
@@ -71,7 +62,7 @@
         "arbitrageur": "0x574366e84f74f2e913aD9A6782CE6Ac8022e16EB",
         "ambBridgeOnXDai": "0x2069D1581Afa0C7ed31b60361b6A60Fa020A0Bfe",
         "multiTokenMediatorOnXDai": "0x14Ed4251Dfd91DDE8Ce6927474F7a015D299a998",
-        "usdc": "0xAFDa926d549a67229D8DB529638E0BAFCDb66458"
+        "usdc": "0x0f2A5D18aD37395266c0b59e3dfCFe790a0EE8E1"
       }
     }
   }
