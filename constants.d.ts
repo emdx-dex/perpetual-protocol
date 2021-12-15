@@ -21,3 +21,6 @@ export declare const ROOT_DIR: string
 export declare const SRC_DIR: string
 export declare const SRC_DIR_NAME: string
 export declare const ETHERSCAN_API_KEY: string
+export declare const NEW_AGGREGATOR_ADDRESS: string
+export declare const NEW_PRICE_FEED_KEY: string
+export declare const NEW_INSTANCE_NAME: string

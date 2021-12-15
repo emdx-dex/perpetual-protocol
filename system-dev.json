@@ -1,0 +1,66 @@
+{
+  "layers": {
+    "layer1": {
+      "contracts": {},
+      "accounts": [],
+      "network": "avax",
+      "externalContracts": {
+        "foundationGovernance": "0xfE5E335363f0B95e5Ce15040976c6Cbab331491a",
+        "ambBridgeOnEth": "0xcE515F72164b1D1d4EE88cfA6188B4DeD344879e",
+        "multiTokenMediatorOnEth": "0x317a38F732bEc36A1e43e634C5389B939BD6E2e3",
+        "usdc": "0xAFDa926d549a67229D8DB529638E0BAFCDb66458",
+        "perp": "0xd2ec712F11E1B9Fe0b10b2b64774A7B35fe8dbe2"
+      }
+    },
+    "layer2": {
+      "contracts": {
+        "InsuranceFund": {
+          "name": "InsuranceFund",
+          "address": "0xa5c81a2f80fc550556075Bafe786A03A31Fd8117"
+        },
+        "L2PriceFeed": {
+          "name": "L2PriceFeed",
+          "address": "0x1caA15e8824F9741b91FD031Aa48ff270eEfA5e8"
+        },
+        "ChainlinkL1": {
+          "name": "ChainlinkL1",
+          "address": "0x8c660C16341D30AEFAcF8adC962CF9F480813965"
+        },
+        "ClearingHouse": {
+          "name": "ClearingHouse",
+          "address": "0xd43b9629E283a5F49460daE1031eF65504e918Af"
+        },
+        "ETHUSDC": {
+          "name": "Amm",
+          "address": "0xC96f196BB95e2e482f90411eA788aA626FCD57D7"
+        },
+        "BTCUSDC": {
+          "name": "Amm",
+          "address": "0xB640036Ed6Ec25ae96309ba6a6802C1907326D8e"
+        },
+        "ClearingHouseViewer": {
+          "name": "ClearingHouseViewer",
+          "address": "0x3943F75E05bC3bEdcaf81642d4EcD7CaD9ECe49D"
+        },
+        "AmmReader": {
+          "name": "AmmReader",
+          "address": "0x03c161dC7A462C7BF943f45Ce1E85840e15Fe98D"
+        },
+        "AVAXUSDC": {
+          "name": "Amm",
+          "address": "0xA4330ef7e184B8862Bc4c13Fa1b70a7Ccb0260fD"
+        },
+        "SOAPUSDT": {
+          "name": "Amm",
+          "address": "0xefFA169BA56A3d62c67C5eABfB65196394d7b1ff"
+        }
+      },
+      "accounts": [],
+      "network": "avax",
+      "externalContracts": {
+        "foundationGovernance": "0xfE5E335363f0B95e5Ce15040976c6Cbab331491a",
+        "usdc": "0x0f2A5D18aD37395266c0b59e3dfCFe790a0EE8E1"
+      }
+    }
+  }
+}

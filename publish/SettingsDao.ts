@@ -3,6 +3,7 @@ import { ShellString } from "shelljs"
 import { ExternalContracts, Layer, Network, Stage, SystemDeploySettings } from "../scripts/common"
 import production from "./settings/production.json"
 import staging from "./settings/staging.json"
+import devNewAmm from "./settings/dev-new-amm.json"
 
 export class SettingsDao {
     readonly settingsCached!: SystemDeploySettings
@@ -13,6 +14,9 @@ export class SettingsDao {
                 break
             case "staging":
                 this.settingsCached = staging as SystemDeploySettings
+                break
+            case "dev-new-amm":
+                this.settingsCached = devNewAmm as SystemDeploySettings
                 break
             case "test":
                 try {
@@ -96,5 +100,23 @@ export class SettingsDao {
 
     isLocal(): boolean {
         return this.stage === "test"
+    }
+
+    getMetadataFileName(): string {
+        switch(this.stage) {
+            case "test":
+                return "system-local.json";
+            case "dev":
+            case "dev-new-amm":
+                return "system-dev.json";
+            case "staging":
+            case "staging-new-amm":
+                return "system-staging.json"
+            case "production":
+            case "production-new-amm":
+                return "system.json"
+            default:
+                throw new Error(`stage=${this.stage} not supported`)
+        }
     }
 }

@@ -28,4 +28,7 @@ module.exports = {
     SRC_DIR_NAME,
     SRC_DIR: join(ROOT_DIR, SRC_DIR_NAME),
     ETHERSCAN_API_KEY: process.env["ETHERSCAN_API_KEY"] || "",
+    NEW_AGGREGATOR_ADDRESS: `${process.env["NEW_AGGREGATOR_ADDRESS"]}` || "",
+    NEW_PRICE_FEED_KEY: `${process.env["NEW_PRICE_FEED_KEY"]}` || "",
+    NEW_INSTANCE_NAME: `${process.env["NEW_INSTANCE_NAME"]}` || "",
 }

@@ -8,7 +8,7 @@ import {
     KOVAN_MNEMONIC, KOVAN_URL, RINKEBY_MNEMONIC, RINKEBY_URL, ROPSTEN_MNEMONIC, ROPSTEN_URL, SOKOL_MNEMONIC, SOKOL_URL,
     SRC_DIR, XDAI_MNEMONIC, XDAI_URL
 } from "./constants"
-import { TASK_DEPLOY_LAYER } from "./scripts/common"
+import { TASK_DEPLOY_LAYER, TASK_DEPLOY_AMM } from "./scripts/common"
 
 usePlugin("@nomiclabs/buidler-truffle5")
 usePlugin("@nomiclabs/buidler-ethers")
@@ -38,6 +38,20 @@ task(TASK_DEPLOY_LAYER, "Deploy a layer")
         // because it depends on built artifacts and creates circular dependencies
         // eslint-disable-next-line @typescript-eslint/no-var-requires
         const { deployLayer } = require("./scripts/deploy-layer")
+
+        await bre.run(TASK_COMPILE)
+        await deployLayer(stage, layer, +batch, bre)
+    })
+
+task(TASK_DEPLOY_AMM, "Deploy a new amm")
+    .addPositionalParam("stage", "Target stage of the deployment")
+    .addPositionalParam("layer", "Target layer of the deployment")
+    .addPositionalParam("batch", "Target batch of the deployment")
+    .setAction(async ({ stage, layer, batch }, bre) => {
+        // only load dependencies when deploy is in action
+        // because it depends on built artifacts and creates circular dependencies
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const { deployLayer } = require("./scripts/deploy-new-amm")
 
         await bre.run(TASK_COMPILE)
         await deployLayer(stage, layer, +batch, bre)

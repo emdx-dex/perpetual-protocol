@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { ethers } from "@nomiclabs/buidler"
+import bre, { ethers } from "@nomiclabs/buidler"
 import { ExternalContracts, Layer } from "../scripts/common"
 import {
     AmmReader,
@@ -17,6 +17,9 @@ import { DeployConfig, PriceFeedKey } from "./contract/DeployConfig"
 import { AmmInstanceName, ContractName } from "./ContractName"
 import { SettingsDao } from "./SettingsDao"
 import { SystemMetadataDao } from "./SystemMetadataDao"
+import { flatten } from "../scripts/flatten"
+import { TASK_COMPILE } from "@nomiclabs/buidler/builtin-tasks/task-names"
+import { SRC_DIR } from "../constants"
 
 export type DeployTask = () => Promise<void>
 
@@ -444,38 +447,33 @@ export class ContractPublisher {
             // batch 1 (optional)
             // deploy a new implementation of ClearingHouse, in order to make xdai blockscout verification works,
             // we'll deploy a flatten one in an isolated build env. then PROXY_ADMIN should upgrade proxy to the new implementation
-            //[
-            //    async (): Promise<void> => {
-            //        const filename = `${ContractName.ClearingHouse}.sol`
-
-            //        // after flatten sol file we must re-compile again
-            //        await flatten(SRC_DIR, bre.config.paths.sources, filename)
-            //        await bre.run(TASK_COMPILE)
-
-            //        // deploy clearing house implementation
-            //        const contract = await this.factory.create<ClearingHouse>(ContractName.ClearingHouse)
-            //        await contract.prepareUpgradeContract()
-            //    },
-            //],
+            [
+                async (): Promise<void> => {
+                    const filename = `${ContractName.ClearingHouse}.sol`
+                   // after flatten sol file we must re-compile again
+                    await flatten(SRC_DIR, bre.config.paths.sources, filename)
+                    await bre.run(TASK_COMPILE)
+                   // deploy clearing house implementation
+                    const contract = await this.factory.create<ClearingHouse>(ContractName.ClearingHouse)
+                    await contract.prepareUpgradeContract()
+                },
+            ],
             // batch 2 (optional)
             // deploy a new implementation of Amm, in order to make xdai blockscout verification works,
             // we'll deploy a flatten one in an isolated build env. then PROXY_ADMIN should upgrade proxy to the new implementation
-            //[
-            //    async (): Promise<void> => {
-            //        const filename = `${ContractName.Amm}.sol`
-
-            //        // after flatten sol file we must re-compile again
-            //        await flatten(SRC_DIR, bre.config.paths.sources, filename)
-            //        await bre.run(TASK_COMPILE)
-
-            //        // deploy amm implementation
-            //        const ETHUSDC = this.factory.createAmm(AmmInstanceName.ETHUSDC)
-            //        await ETHUSDC.prepareUpgradeContract()
-
-            //        const BTCUSDC = this.factory.createAmm(AmmInstanceName.BTCUSDC)
-            //        await BTCUSDC.prepareUpgradeContract()
-            //    },
-            //],
+            [
+                async (): Promise<void> => {
+                    const filename = `${ContractName.Amm}.sol`
+                   // after flatten sol file we must re-compile again
+                    await flatten(SRC_DIR, bre.config.paths.sources, filename)
+                    await bre.run(TASK_COMPILE)
+                   // deploy amm implementation
+                    const ETHUSDC = this.factory.createAmm(AmmInstanceName.ETHUSDC)
+                    await ETHUSDC.prepareUpgradeContract()
+                    const BTCUSDC = this.factory.createAmm(AmmInstanceName.BTCUSDC)
+                    await BTCUSDC.prepareUpgradeContract()
+                },
+            ],
         ],
     }
 

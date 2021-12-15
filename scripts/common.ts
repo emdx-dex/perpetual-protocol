@@ -1,5 +1,5 @@
 // all lower-case, no dash; otherwise AWS deployment might fail
-export type Stage = "production" | "staging" | "test"
+export type Stage = "production" | "staging" | "test" | "dev-new-amm" | "dev" | "staging-new-amm" | "production-new-amm"
 export type Network = "homestead" | "rinkeby" | "ropsten" | "kovan" | "xdai" | "sokol" | "localhost" | "avax"
 export type Layer = "layer1" | "layer2"
 
@@ -83,3 +83,4 @@ export interface SystemDeploySettings {
 }
 
 export const TASK_DEPLOY_LAYER = "deploy:layer"
+export const TASK_DEPLOY_AMM = "deploy:new-amm"
