@@ -1,14 +1,8 @@
 import { BigNumber } from "ethers"
-import { AmmInstanceName } from "../NewAmmContractName"
-import { NEW_PRICE_FEED_KEY } from "../../constants"
+import { NEW_PRICE_FEED_KEY, NEW_AGGREGATOR_ADDRESS, NEW_INSTANCE_NAME } from "../../constants"
 
 // TODO replace by ethers format
 const DEFAULT_DIGITS = BigNumber.from(10).pow(18)
-
-// chainlink
-export enum PriceFeedKey {
-    NEW = "SOAP",
-}
 
 // amm
 interface AmmDeployArgs {
@@ -76,13 +70,13 @@ export class DeployConfig {
 
     // amm
     readonly ammConfigMap: Record<string, AmmConfig> = {
-        [AmmInstanceName.NEW]: NEW_USD_AMM,
+        NEW: NEW_USD_AMM,
     }
 
     constructor() {
         this.confirmations = 1
         this.chainlinkMap = {
-            [NEW_PRICE_FEED_KEY]: "0xfe5e335363f0b95e5ce15040976c6cbab331491a",
+            [NEW_PRICE_FEED_KEY]: NEW_AGGREGATOR_ADDRESS,
         }
     }
 }

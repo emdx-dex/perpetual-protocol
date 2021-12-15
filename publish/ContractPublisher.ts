@@ -527,14 +527,7 @@ export class ContractPublisher {
         if (!isLastBatchForCurrentLayer) {
             return
         }
-        // local are basically in 1 layer, can't transfer twice in the same network. will transfer in the very last batch
-        if (this.settingsDao.getChainId("layer1") === this.settingsDao.getChainId("layer2")) {
-            const layerWithMoreBatch =
-                this.taskBatchesMap.layer1.length > this.taskBatchesMap.layer2.length ? "layer1" : "layer2"
-            if (layerWithMoreBatch !== this.layerType) {
-                return
-            }
-        }
+
         console.log(`${this.layerType} contract deployment finished.`)
     }
 }

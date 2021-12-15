@@ -12,7 +12,6 @@ import {
     SystemMetadata
 } from "../scripts/common"
 import { asyncExec } from "../scripts/helper"
-import { ContractInstanceName } from "./NewAmmContractName"
 import { SettingsDao } from "./SettingsDao"
 
 export interface AccountMetadata {
@@ -72,7 +71,7 @@ export class SystemMetadataDao {
         )
     }
 
-    getContractMetadata(layerType: Layer, contractInstanceName: ContractInstanceName): ContractMetadata {
+    getContractMetadata(layerType: Layer, contractInstanceName: string): ContractMetadata {
         return this.systemMetadataCache.layers[layerType]!.contracts[contractInstanceName]
     }
 

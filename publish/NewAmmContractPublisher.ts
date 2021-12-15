@@ -11,8 +11,7 @@ import { DeployConfig } from "./contract/NewAmmDeployConfig"
 import { ContractName } from "./ContractName"
 import { SettingsDao } from "./SettingsDao"
 import { SystemMetadataDao } from "./NewAmmSystemMetadataDao"
-import { AmmInstanceName } from "./NewAmmContractName"
-import { NEW_PRICE_FEED_KEY } from "../constants"
+import { NEW_PRICE_FEED_KEY, NEW_INSTANCE_NAME } from "../constants"
 
 export type DeployTask = () => Promise<void>
 
@@ -27,9 +26,9 @@ export class ContractPublisher {
         layer2: [
             [
                 async (): Promise<void> => {
-                    console.log(`deploy ${AmmInstanceName.NEW} amm...`)
+                    console.log(`deploy ${NEW_INSTANCE_NAME} amm...`)
                     const l2PriceFeedContract = this.factory.create<L2PriceFeed>(ContractName.L2PriceFeed)
-                    const ammContract = this.factory.createAmm(AmmInstanceName.NEW)
+                    const ammContract = this.factory.createAmm(NEW_INSTANCE_NAME)
                     const quoteTokenAddr = this.externalContract.usdc!
                     await ammContract.deployUpgradableContract(
                         this.deployConfig.ammConfigMap,
@@ -39,17 +38,17 @@ export class ContractPublisher {
                     )
                 },
                 async (): Promise<void> => {
-                    console.log(`add ${AmmInstanceName.NEW} aggregators to L2PriceFeed`)
+                    console.log(`add ${NEW_INSTANCE_NAME} aggregators to L2PriceFeed`)
                     const l2PriceFeed = await this.factory.create<L2PriceFeed>(ContractName.L2PriceFeed).instance()
                     await (
                         await l2PriceFeed.addAggregator(ethers.utils.formatBytes32String(NEW_PRICE_FEED_KEY.toString()))
                     ).wait(this.confirmations)
                 },
                 async (): Promise<void> => {
-                    console.log(`set ${AmmInstanceName.NEW} amm Cap...`)
-                    const amm = await this.factory.createAmm(AmmInstanceName.NEW).instance()
+                    console.log(`set ${NEW_INSTANCE_NAME} amm Cap...`)
+                    const amm = await this.factory.createAmm(NEW_INSTANCE_NAME).instance()
                     const { maxHoldingBaseAsset, openInterestNotionalCap } = this.deployConfig.ammConfigMap[
-                        AmmInstanceName.NEW
+                        "NEW"
                     ].properties
                     if (maxHoldingBaseAsset.gt(0)) {
                         await (
@@ -61,29 +60,29 @@ export class ContractPublisher {
                     }
                 },
                 async (): Promise<void> => {
-                    console.log(`${AmmInstanceName.NEW} amm.setCounterParty...`)
+                    console.log(`${NEW_INSTANCE_NAME} amm.setCounterParty...`)
                     const clearingHouseContract = this.factory.create<ClearingHouse>(ContractName.ClearingHouse)
-                    const amm = await this.factory.createAmm(AmmInstanceName.NEW).instance()
+                    const amm = await this.factory.createAmm(NEW_INSTANCE_NAME).instance()
                     await (await amm.setCounterParty(clearingHouseContract.address!)).wait(this.confirmations)
                 },
                 async (): Promise<void> => {
-                    console.log(`insuranceFund.add ${AmmInstanceName.NEW} amm...`)
+                    console.log(`insuranceFund.add ${NEW_INSTANCE_NAME} amm...`)
                     const insuranceFundContract = this.factory.create<InsuranceFund>(ContractName.InsuranceFund)
-                    const ammContract = this.factory.createAmm(AmmInstanceName.NEW)
+                    const ammContract = this.factory.createAmm(NEW_INSTANCE_NAME)
                     const insuranceFund = await insuranceFundContract.instance()
                     await (await insuranceFund.addAmm(ammContract.address!)).wait(this.confirmations)
                 },
                 async (): Promise<void> => {
-                    console.log(`opening Amm ${AmmInstanceName.NEW}...`)
-                    const ethUsdc = await this.factory.createAmm(AmmInstanceName.NEW).instance()
+                    console.log(`opening Amm ${NEW_INSTANCE_NAME}...`)
+                    const ethUsdc = await this.factory.createAmm(NEW_INSTANCE_NAME).instance()
                     await (await ethUsdc.setOpen(true)).wait(this.confirmations)
                 },
                 async (): Promise<void> => {
                     const gov = this.externalContract.foundationGovernance!
                     console.log(
-                        `transferring ${AmmInstanceName.NEW} owner to governance=${gov}...please remember to claim the ownership`,
+                        `transferring ${NEW_INSTANCE_NAME} owner to governance=${gov}...please remember to claim the ownership`,
                     )
-                    const PAIR = await this.factory.createAmm(AmmInstanceName.NEW).instance()
+                    const PAIR = await this.factory.createAmm(NEW_INSTANCE_NAME).instance()
                     await (await PAIR.setOwner(gov)).wait(this.confirmations)
                 },
             ]
@@ -136,14 +135,7 @@ export class ContractPublisher {
         if (!isLastBatchForCurrentLayer) {
             return
         }
-        // local are basically in 1 layer, can't transfer twice in the same network. will transfer in the very last batch
-        if (this.settingsDao.getChainId("layer1") === this.settingsDao.getChainId("layer2")) {
-            const layerWithMoreBatch =
-                this.taskBatchesMap.layer1.length > this.taskBatchesMap.layer2.length ? "layer1" : "layer2"
-            if (layerWithMoreBatch !== this.layerType) {
-                return
-            }
-        }
+
         console.log(`${this.layerType} contract deployment finished.`)
     }
 }

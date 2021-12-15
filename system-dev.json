@@ -50,9 +50,9 @@
           "name": "Amm",
           "address": "0xA4330ef7e184B8862Bc4c13Fa1b70a7Ccb0260fD"
         },
-        "SOAPUSDT": {
+        "LINKUSDC": {
           "name": "Amm",
-          "address": "0xefFA169BA56A3d62c67C5eABfB65196394d7b1ff"
+          "address": "0xA403a58fc3194960f17e35E8BBD5434ed48B0DEe"
         }
       },
       "accounts": [],

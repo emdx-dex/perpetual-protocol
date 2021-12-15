@@ -18,7 +18,7 @@ export class NewAmmContractWrapper extends NewAmmContractWrapperBase<Amm> {
         quoteAssetAddress: string,
         fetchPrice= true
     ): Promise<Amm> {
-        const ammConfig = ammConfigMap[this.contractInstanceName]
+        const ammConfig = ammConfigMap["NEW"]
         const {
             quoteAssetReserve,
             baseAssetReserve,
