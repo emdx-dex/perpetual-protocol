@@ -53,13 +53,17 @@
         "LINKUSDC": {
           "name": "Amm",
           "address": "0xA403a58fc3194960f17e35E8BBD5434ed48B0DEe"
+        },
+        "LINKUSDT": {
+          "name": "Amm",
+          "address": "0xC7F4E9C86f8A233eb27432e21aB03E3102e9131B"
         }
       },
       "accounts": [],
       "network": "avax",
       "externalContracts": {
         "foundationGovernance": "0xfE5E335363f0B95e5Ce15040976c6Cbab331491a",
-        "usdc": "0x0f2A5D18aD37395266c0b59e3dfCFe790a0EE8E1"
+        "usdc": "0xAFDa926d549a67229D8DB529638E0BAFCDb66458"
       }
     }
   }

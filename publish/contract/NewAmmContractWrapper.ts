@@ -7,6 +7,7 @@ import { NewAmmContractWrapperBase } from "./NewAmmContractWrapperBase"
 import { AmmConfigMap } from "./NewAmmDeployConfig"
 import { BigNumber, utils } from "ethers"
 import { CoinGeckoService } from "../CoinGeckoService"
+import { NEW_INSTANCE_PRICE } from "../../constants"
 
 
 export class NewAmmContractWrapper extends NewAmmContractWrapperBase<Amm> {
@@ -31,11 +32,15 @@ export class NewAmmContractWrapper extends NewAmmContractWrapperBase<Amm> {
         } = ammConfig.deployArgs
 
         let updatedQuoteAssetReserve: BigNumber = quoteAssetReserve
+        let price
         if (fetchPrice) {
-            const price = await this.coinGecko.fetchUsdPrice(priceFeedKey)
-            const priceInWei = utils.parseEther(price)
-            updatedQuoteAssetReserve = baseAssetReserve.mul(priceInWei).div(BigNumber.from(10).pow(18))
+            price = await this.coinGecko.fetchUsdPrice(priceFeedKey)
+        } else {
+            price = NEW_INSTANCE_PRICE
         }
+
+        const priceInWei = utils.parseEther(price)
+        updatedQuoteAssetReserve = baseAssetReserve.mul(priceInWei).div(BigNumber.from(10).pow(18))
 
         const priceFeedKeyBytes = ethers.utils.formatBytes32String(priceFeedKey.toString())
         const args = [

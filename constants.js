@@ -31,4 +31,5 @@ module.exports = {
     NEW_AGGREGATOR_ADDRESS: `${process.env["NEW_AGGREGATOR_ADDRESS"]}` || "",
     NEW_PRICE_FEED_KEY: `${process.env["NEW_PRICE_FEED_KEY"]}` || "",
     NEW_INSTANCE_NAME: `${process.env["NEW_INSTANCE_NAME"]}` || "",
+    NEW_INSTANCE_PRICE: `${process.env["NEW_INSTANCE_PRICE"]}` || "",
 }
