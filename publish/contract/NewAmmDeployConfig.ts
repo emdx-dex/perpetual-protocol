@@ -1,5 +1,5 @@
 import { BigNumber } from "ethers"
-import { NEW_PRICE_FEED_KEY, NEW_AGGREGATOR_ADDRESS, NEW_INSTANCE_NAME } from "../../constants"
+import { NEW_PRICE_FEED_KEY, NEW_AGGREGATOR_ADDRESS } from "../../constants"
 
 // TODO replace by ethers format
 const DEFAULT_DIGITS = BigNumber.from(10).pow(18)

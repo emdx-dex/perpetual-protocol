@@ -1,12 +1,12 @@
 import { TASK_COMPILE, TASK_COMPILE_GET_COMPILER_INPUT } from "@nomiclabs/buidler/builtin-tasks/task-names"
 import { task, usePlugin } from "@nomiclabs/buidler/config"
 import {
-    ARTIFACTS_DIR, AVAX_MNEMONIC, AVAX_URL,
+    ARTIFACTS_DIR, AVAX_PK, AVAX_URL,
     COVERAGE_URL,
     ETHERSCAN_API_KEY,
-    GAS_PRICE, HOMESTEAD_MNEMONIC, HOMESTEAD_URL,
-    KOVAN_MNEMONIC, KOVAN_URL, RINKEBY_MNEMONIC, RINKEBY_URL, ROPSTEN_MNEMONIC, ROPSTEN_URL, SOKOL_MNEMONIC, SOKOL_URL,
-    SRC_DIR, XDAI_MNEMONIC, XDAI_URL
+    GAS_PRICE, HOMESTEAD_PK, HOMESTEAD_URL,
+    KOVAN_PK, KOVAN_URL, RINKEBY_PK, RINKEBY_URL, ROPSTEN_PK, ROPSTEN_URL, SOKOL_PK, SOKOL_URL,
+    SRC_DIR, XDAI_PK, XDAI_URL
 } from "./constants"
 import { TASK_DEPLOY_LAYER, TASK_DEPLOY_AMM } from "./scripts/common"
 
@@ -66,37 +66,37 @@ const config = {
         ropsten: {
             url: ROPSTEN_URL,
             gasPrice: Number(GAS_PRICE),
-            accounts: [ROPSTEN_MNEMONIC],
+            accounts: [ROPSTEN_PK],
         },
         kovan: {
             url: KOVAN_URL,
             gasPrice: Number(GAS_PRICE),
-            accounts: [KOVAN_MNEMONIC],
+            accounts: [KOVAN_PK],
         },
         rinkeby: {
             url: RINKEBY_URL,
             gasPrice: Number(GAS_PRICE),
-            accounts: [RINKEBY_MNEMONIC],
+            accounts: [RINKEBY_PK],
         },
         homestead: {
             url: HOMESTEAD_URL,
             gasPrice: Number(GAS_PRICE),
-            accounts: [HOMESTEAD_MNEMONIC],
+            accounts: [HOMESTEAD_PK],
         },
         sokol: {
             url: SOKOL_URL,
             gasPrice: Number(GAS_PRICE),
-            accounts: [SOKOL_MNEMONIC],
+            accounts: [SOKOL_PK],
         },
         xdai: {
             url: XDAI_URL,
             gasPrice: Number(GAS_PRICE),
-            accounts: [XDAI_MNEMONIC],
+            accounts: [XDAI_PK],
         },
         avax: {
             url: AVAX_URL,
             gasPrice: Number(GAS_PRICE),
-            accounts: [AVAX_MNEMONIC],
+            accounts: [AVAX_PK],
         },
     },
     solc: {
