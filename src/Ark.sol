@@ -43,11 +43,16 @@ contract Ark is IArk, PerpFiOwnableUpgrade, BlockContext, ReentrancyGuardUpgrade
     // withdraw for covering unexpected loss, only insurance fund
     function withdrawForLoss(Decimal.decimal memory _amount, IERC20 _quoteToken) public override {
         require(insuranceFund == _msgSender(), "only insuranceFund");
+
+        if (_getTokenDecimals(address(_quoteToken)) < 18) {
+            // the smallest expression in terms of decimals of the token is
+            // added to _amount because the _transfer method of DecimalERC20
+            // rounds down when token decilas are less than 18
+            _amount = _amount.addD(_toDecimal(_quoteToken, 1));
+        }
+
         require(_balanceOf(_quoteToken, address(this)).toUint() >= _amount.toUint(), "insufficient funds");
 
-        // the smallest expression in terms of decimals of the token is added to
-        // _amount because the _transfer method of DecimalERC20 rounds down
-        _amount = _amount.addD(_toDecimal(_quoteToken, 1));
         // stores timestamp and cumulative amount of withdrawn token
         Decimal.decimal memory cumulativeAmount;
         uint256 len = withdrawnTokenHistory.length;
