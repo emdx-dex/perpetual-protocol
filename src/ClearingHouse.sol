@@ -17,8 +17,6 @@ import { IMultiTokenRewardRecipient } from "./interface/IMultiTokenRewardRecipie
 import { IAmm } from "./interface/IAmm.sol";
 import { IInsuranceFund } from "./interface/IInsuranceFund.sol";
 
-// note BaseRelayRecipient must come after OwnerPausableUpgradeSafe so its _msgSender() takes precedence
-// (yes, the ordering is reversed comparing to Python)
 contract ClearingHouse is DecimalERC20, OwnerPausableUpgradeSafe, ReentrancyGuardUpgradeSafe, BlockContext {
     using Decimal for Decimal.decimal;
     using SignedDecimal for SignedDecimal.signedDecimal;

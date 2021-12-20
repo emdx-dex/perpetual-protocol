@@ -56,7 +56,7 @@ contract Ark is IArk, PerpFiOwnableUpgrade, BlockContext, ReentrancyGuardUpgrade
         } else {
             cumulativeAmount = withdrawnTokenHistory[len - 1].cumulativeAmount.addD(_amount);
         }
-        // store the widthraw history
+        // store the withdrawal history
         withdrawnTokenHistory.push(
             WithdrawnToken({ timestamp: _blockTimestamp(), cumulativeAmount: cumulativeAmount })
         );
