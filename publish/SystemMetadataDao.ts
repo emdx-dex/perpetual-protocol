@@ -94,7 +94,7 @@ export class SystemMetadataDao {
     }
 
     private get metadataFileName(): string {
-        return this.settingsDao.isLocal() ? "system-local.json" : "system.json"
+        return this.settingsDao.getMetadataFileName()
     }
 
     private get buildDir(): string {
