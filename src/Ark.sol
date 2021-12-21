@@ -19,7 +19,7 @@ contract Ark is IArk, PerpFiOwnableUpgrade, BlockContext, ReentrancyGuardUpgrade
     //
     // EVENT
     //
-    event WithdrawnForLoss(address withdrawer, uint256 amount);
+    event WithdrawnForLoss(address withdrawer, uint256 amount, address token);
 
     struct WithdrawnToken {
         uint256 timestamp;
@@ -28,7 +28,7 @@ contract Ark is IArk, PerpFiOwnableUpgrade, BlockContext, ReentrancyGuardUpgrade
 
     address public insuranceFund;
     // An array of token withdraw timestamp and cumulative amount
-    WithdrawnToken[] public withdrawnTokenHistory;
+    mapping(IERC20 => WithdrawnToken[]) public withdrawnTokenHistory;
 
     uint256[50] private __gap;
 
@@ -55,19 +55,19 @@ contract Ark is IArk, PerpFiOwnableUpgrade, BlockContext, ReentrancyGuardUpgrade
 
         // stores timestamp and cumulative amount of withdrawn token
         Decimal.decimal memory cumulativeAmount;
-        uint256 len = withdrawnTokenHistory.length;
+        uint256 len = withdrawnTokenHistory[_quoteToken].length;
         if (len == 0) {
             cumulativeAmount = _amount;
         } else {
-            cumulativeAmount = withdrawnTokenHistory[len - 1].cumulativeAmount.addD(_amount);
+            cumulativeAmount = withdrawnTokenHistory[_quoteToken][len - 1].cumulativeAmount.addD(_amount);
         }
         // store the withdrawal history
-        withdrawnTokenHistory.push(
+        withdrawnTokenHistory[_quoteToken].push(
             WithdrawnToken({ timestamp: _blockTimestamp(), cumulativeAmount: cumulativeAmount })
         );
 
         _transfer(_quoteToken, _msgSender(), _amount);
-        emit WithdrawnForLoss(_msgSender(), _amount.toUint());
+        emit WithdrawnForLoss(_msgSender(), _amount.toUint(), address(_quoteToken));
     }
 
     // only owner can withdraw funds anytime
