@@ -156,6 +156,14 @@ export class DeployConfig {
                     [PriceFeedKey.AVAX]: "0x5498BB86BC934c8D34FDA08E81D444153d0D06aD",
                 }
                 break
+            case "dev":
+                this.confirmations = 1
+                this.chainlinkMap = {
+                    [PriceFeedKey.BTC]: "0x378E78509a907B1Ec5c24d9f0243BD39f7A7b007",
+                    [PriceFeedKey.ETH]: "0xf4060f80f295b34e0C2471461ba43745Aeb186d6",
+                    [PriceFeedKey.AVAX]: "0x5498BB86BC934c8D34FDA08E81D444153d0D06aD",
+                }
+                break
             case "test":
                 this.confirmations = 1
                 this.chainlinkMap = {

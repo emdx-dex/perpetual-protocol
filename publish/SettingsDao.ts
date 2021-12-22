@@ -4,6 +4,7 @@ import { ExternalContracts, Layer, Network, Stage, SystemDeploySettings } from "
 import production from "./settings/production.json"
 import staging from "./settings/staging.json"
 import devNewAmm from "./settings/dev-new-amm.json"
+import dev from "./settings/dev.json"
 
 export class SettingsDao {
     readonly settingsCached!: SystemDeploySettings
@@ -17,6 +18,9 @@ export class SettingsDao {
                 break
             case "dev-new-amm":
                 this.settingsCached = devNewAmm as SystemDeploySettings
+                break
+            case "dev":
+                this.settingsCached = dev as SystemDeploySettings
                 break
             case "test":
                 try {
