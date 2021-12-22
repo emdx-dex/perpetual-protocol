@@ -104,7 +104,7 @@ contract InsuranceFund is IInsuranceFund, PerpFiOwnableUpgrade, BlockContext, Re
     }
 
     function removeToken(IERC20 _token) external onlyOwner {
-        require(isQuoteTokenExisted(_token), "token not exist");
+        require(isQuoteTokenExisted(_token), "token does not exist");
 
         quoteTokenMap[address(_token)] = false;
         uint256 quoteTokensLength = getQuoteTokenLength();

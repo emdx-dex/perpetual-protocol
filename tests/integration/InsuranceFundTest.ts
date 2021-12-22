@@ -439,7 +439,7 @@ describe("InsuranceFund", () => {
             await insuranceFund.addAmm(amm2.address)
             expect(await insuranceFund.getQuoteTokenLength()).to.eq(2)
 
-            await expectRevert(insuranceFund.removeToken(quoteToken3.address), "token not exist")
+            await expectRevert(insuranceFund.removeToken(quoteToken3.address), "token does not exist")
         })
 
         it("remove token and exchange token left to another left quote token pool", async () => {

@@ -47,7 +47,7 @@ contract Ark is IArk, PerpFiOwnableUpgrade, BlockContext, ReentrancyGuardUpgrade
         if (_getTokenDecimals(address(_quoteToken)) < 18) {
             // the smallest expression in terms of decimals of the token is
             // added to _amount because the _transfer method of DecimalERC20
-            // rounds down when token decilas are less than 18
+            // rounds down when token decimals are less than 18
             _amount = _amount.addD(_toDecimal(_quoteToken, 1));
         }
 
