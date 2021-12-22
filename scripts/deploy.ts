@@ -20,13 +20,24 @@ export async function deploy(stage: Stage, options?: ExecOptions): Promise<void>
         rm(`.openzeppelin/${ozNetworkFile[layer2Network]}.json`)
     }
 
+    // Base contracts
     await asyncExec(`buidler --network ${layer2Network} ${TASK_DEPLOY_LAYER} ${stage} layer2 0`, options)
+
+    // AMMs
+    await asyncExec(`buidler --network ${layer2Network} ${TASK_DEPLOY_LAYER} ${stage} layer2 1`, options)
+
+    // Transfer ownership
+    await asyncExec(`buidler --network ${layer2Network} ${TASK_DEPLOY_LAYER} ${stage} layer2 2`, options)
+
+    // Optional for clearing house verification
     //await asyncExec(
-    //    `buidler --network ${layer2Network} --config buidler.flatten.clearinghouse.config.ts ${TASK_DEPLOY_LAYER} ${stage} layer2 1`,
+    //    `buidler --network ${layer2Network} --config buidler.flatten.clearinghouse.config.ts ${TASK_DEPLOY_LAYER} ${stage} layer2 4`,
     //    options,
     //)
+
+    // Optional for amms verification
     //await asyncExec(
-    //    `buidler --network ${layer2Network} --config buidler.flatten.amm.config.ts ${TASK_DEPLOY_LAYER} ${stage} layer2 2`,
+    //    `buidler --network ${layer2Network} --config buidler.flatten.amm.config.ts ${TASK_DEPLOY_LAYER} ${stage} layer2 5`,
     //    options,
     //)
 }
