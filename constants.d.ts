@@ -14,6 +14,8 @@ export declare const XDAI_URL: string
 export declare const XDAI_PK: string
 export declare const AVAX_URL: string
 export declare const AVAX_PK: string
+export declare const FUJI_URL: string
+export declare const FUJI_PK: string
 export declare const GAS: number
 export declare const GAS_PRICE: number
 export declare const ARTIFACTS_DIR: string

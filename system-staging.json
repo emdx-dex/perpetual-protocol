@@ -3,7 +3,7 @@
     "layer1": {
       "contracts": {},
       "accounts": [],
-      "network": "avax",
+      "network": "fuji",
       "externalContracts": {
         "foundationGovernance": "0xfE5E335363f0B95e5Ce15040976c6Cbab331491a",
         "ambBridgeOnEth": "0xcE515F72164b1D1d4EE88cfA6188B4DeD344879e",
@@ -56,7 +56,7 @@
         }
       },
       "accounts": [],
-      "network": "avax",
+      "network": "fuji",
       "externalContracts": {
         "foundationGovernance": "0xfE5E335363f0B95e5Ce15040976c6Cbab331491a",
         "arbitrageur": "0x574366e84f74f2e913aD9A6782CE6Ac8022e16EB",

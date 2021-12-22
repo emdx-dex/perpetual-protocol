@@ -1,6 +1,6 @@
 // all lower-case, no dash; otherwise AWS deployment might fail
 export type Stage = "production" | "staging" | "test" | "dev-new-amm" | "dev" | "staging-new-amm" | "production-new-amm"
-export type Network = "homestead" | "rinkeby" | "ropsten" | "kovan" | "xdai" | "sokol" | "localhost" | "avax"
+export type Network = "homestead" | "rinkeby" | "ropsten" | "kovan" | "xdai" | "sokol" | "localhost" | "avax" | "fuji"
 export type Layer = "layer1" | "layer2"
 
 export const ozNetworkFile: Record<Network, string> = {
@@ -11,7 +11,8 @@ export const ozNetworkFile: Record<Network, string> = {
     localhost: "unknown-31337",
     xdai: "unknown-100",
     sokol: "unknown-100",
-    avax: "avax"
+    avax: "avax",
+    fuji: "fuji"
 }
 
 // TODO deprecated

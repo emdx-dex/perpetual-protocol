@@ -2,7 +2,7 @@
   "layers": {
     "layer2": {
       "chainId": 43113,
-      "network": "avax",
+      "network": "fuji",
       "version": "0",
       "externalContracts": {
         "foundationGovernance": "0xfE5E335363f0B95e5Ce15040976c6Cbab331491a",

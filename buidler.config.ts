@@ -1,7 +1,7 @@
 import { TASK_COMPILE, TASK_COMPILE_GET_COMPILER_INPUT } from "@nomiclabs/buidler/builtin-tasks/task-names"
 import { task, usePlugin } from "@nomiclabs/buidler/config"
 import {
-    ARTIFACTS_DIR, AVAX_PK, AVAX_URL,
+    ARTIFACTS_DIR, AVAX_PK, AVAX_URL, FUJI_PK, FUJI_URL,
     COVERAGE_URL,
     ETHERSCAN_API_KEY,
     GAS_PRICE, HOMESTEAD_PK, HOMESTEAD_URL,
@@ -97,6 +97,11 @@ const config = {
             url: AVAX_URL,
             gasPrice: Number(GAS_PRICE),
             accounts: [AVAX_PK],
+        },
+        fuji: {
+            url: FUJI_URL,
+            gasPrice: Number(GAS_PRICE),
+            accounts: [FUJI_PK],
         },
     },
     solc: {
