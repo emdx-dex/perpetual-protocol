@@ -27,3 +27,5 @@ export declare const NEW_AGGREGATOR_ADDRESS: string
 export declare const NEW_PRICE_FEED_KEY: string
 export declare const NEW_INSTANCE_NAME: string
 export declare const NEW_INSTANCE_PRICE: string
+export declare const NEW_BASE_ASSET_RESERVE: string
+export declare const NEW_QUOTE_ASSET_RESERVE: string

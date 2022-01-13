@@ -1,7 +1,3 @@
-export enum AmmInstanceName {
-    NEW = "SOAPUSDT",
-}
-
 export enum ContractName {
     MetaTxGateway = "MetaTxGateway",
     TetherToken = "TetherToken",
@@ -17,4 +13,4 @@ export enum ContractName {
     Ark = "Ark",
 }
 
-export type ContractInstanceName = ContractName | AmmInstanceName
+export type ContractInstanceName = ContractName
