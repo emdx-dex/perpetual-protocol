@@ -1,7 +1,7 @@
 
 # Manual verification of Implementation Contracts.
 
-This guide explains on how to manually verify Implementation contracts and link it to the Proxy.
+This guide explains how to manually verify Implementation contracts and link them to the Proxy.
 
 ### Pre-requisite
 - The contracts are deployed and the `.openzeppelin`, `build` & `cache`(importantly solc-input.json) folder is generated as a result.
@@ -20,14 +20,14 @@ This guide explains on how to manually verify Implementation contracts and link 
     License = MIT License
 ```
     
-6. In the next page upload the `solc-input.json` from the cache folder.
+6. On the next page upload the `solc-input.json` from the cache folder.
 7. Leave the constructor as default, if populated any.
 8. Proceed to verify.
 
-On successful verification, there should be transaction hash for the verification process.
+On successful verification, there should be a transaction hash for the verification process.
 
 ### Linking Contracts
 
 After a successful Implementation Contract verification, the same can be linked by going to the Proxy contract address(from system-staging.json) on the explorer & clicking on 'more options' under Contracts Tab.
 And then `Is this a proxy` to check & save it to link Proxy & Implementation contracts together.
-After the linking the storage state of the contracts can be read.
+After linking, the storage state of the contracts can be read.
