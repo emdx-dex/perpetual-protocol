@@ -53,15 +53,16 @@
         "AVAXUSDC": {
           "name": "Amm",
           "address": "0xF888213c6430B096468abd456840A0bEf2b9D242"
+        },
+        "XAVAUSDT": {
+          "name": "Amm",
+          "address": "0x7322f93d502F914c7B7360CF8d1889f7416749c8"
         }
       },
       "accounts": [],
       "network": "fuji",
       "externalContracts": {
         "foundationGovernance": "0xfE5E335363f0B95e5Ce15040976c6Cbab331491a",
-        "arbitrageur": "0x574366e84f74f2e913aD9A6782CE6Ac8022e16EB",
-        "ambBridgeOnXDai": "0x2069D1581Afa0C7ed31b60361b6A60Fa020A0Bfe",
-        "multiTokenMediatorOnXDai": "0x14Ed4251Dfd91DDE8Ce6927474F7a015D299a998",
         "usdc": "0x0f2A5D18aD37395266c0b59e3dfCFe790a0EE8E1"
       }
     }
