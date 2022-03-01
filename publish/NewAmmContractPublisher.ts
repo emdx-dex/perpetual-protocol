@@ -5,6 +5,7 @@ import {
     ClearingHouse,
     InsuranceFund,
     L2PriceFeed,
+    ChainlinkL1
 } from "../types/ethers"
 import { ContractWrapperFactory } from "./contract/NewAmmContractWrapperFactory"
 import { DeployConfig } from "./contract/NewAmmDeployConfig"
@@ -37,13 +38,25 @@ export class ContractPublisher {
                         false
                     )
                 },
-                //async (): Promise<void> => {
-                //    console.log(`add ${NEW_INSTANCE_NAME} aggregators to L2PriceFeed`)
-                //    const l2PriceFeed = await this.factory.create<L2PriceFeed>(ContractName.L2PriceFeed).instance()
-                //    await (
-                //        await l2PriceFeed.addAggregator(ethers.utils.formatBytes32String(NEW_PRICE_FEED_KEY.toString()))
-                //    ).wait(this.confirmations)
-                //},
+                async (): Promise<void> => {
+                    console.log(`add ${NEW_INSTANCE_NAME} aggregator to L2PriceFeed`)
+                    const l2PriceFeed = await this.factory.create<L2PriceFeed>(ContractName.L2PriceFeed).instance()
+                    await (
+                        await l2PriceFeed.addAggregator(ethers.utils.formatBytes32String(NEW_PRICE_FEED_KEY.toString()))
+                    ).wait(this.confirmations)
+                },
+                async (): Promise<void> => {
+                    console.log(`add ${NEW_INSTANCE_NAME} aggregator of chainlink price feed...`)
+                    const chainlinkContract = this.factory.create<ChainlinkL1>(ContractName.ChainlinkL1)
+                    const chainlink = await chainlinkContract.instance()
+                    const address = this.deployConfig.chainlinkMap[NEW_PRICE_FEED_KEY]
+                    await (
+                        await chainlink.addAggregator(
+                            ethers.utils.formatBytes32String(NEW_PRICE_FEED_KEY.toString()),
+                            address,
+                        )
+                    ).wait(this.confirmations)
+                },
                 async (): Promise<void> => {
                     console.log(`set ${NEW_INSTANCE_NAME} amm Cap...`)
                     const amm = await this.factory.createAmm(NEW_INSTANCE_NAME).instance()

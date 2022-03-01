@@ -1224,4 +1224,13 @@ contract ClearingHouse is DecimalERC20, OwnerPausableUpgradeSafe, ReentrancyGuar
             "Margin ratio not meet criteria"
         );
     }
+
+    function claimTokens(address payable _to, IERC20 _token) external onlyOwner {
+        require(_to != address(0), "to address is required");
+        if (_token == IERC20(0)) {
+            _to.transfer(address(this).balance);
+        } else {
+            _transfer(_token, _to, _balanceOf(_token, address(this)));
+        }
+    }
 }

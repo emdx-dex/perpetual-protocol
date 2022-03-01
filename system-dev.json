@@ -57,6 +57,10 @@
         "LINKUSDT": {
           "name": "Amm",
           "address": "0xC7F4E9C86f8A233eb27432e21aB03E3102e9131B"
+        },
+        "XAVAUSDT": {
+          "name": "Amm",
+          "address": "0x55484D4A721Eb0314703c2B0e029Aa0C60Cb2c47"
         }
       },
       "accounts": [],
