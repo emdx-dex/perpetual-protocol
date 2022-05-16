@@ -137,11 +137,11 @@ export class ContractPublisher {
                         )
                     ).wait(this.confirmations)
                 },
-                //async (): Promise<void> => {
-                //    console.log("deploy ammReader...")
-                //    const ammReaderContract = this.factory.create<AmmReader>(ContractName.AmmReader)
-                //    await ammReaderContract.deployImmutableContract()
-                //},
+                async (): Promise<void> => {
+                    console.log("deploy ammReader...")
+                    const ammReaderContract = this.factory.create<AmmReader>(ContractName.AmmReader)
+                    await ammReaderContract.deployImmutableContract()
+                },
                 async (): Promise<void> => {
                     console.log("deploy ETHUSDC amm...")
                     const l2PriceFeedContract = this.factory.create<L2PriceFeed>(ContractName.L2PriceFeed)
