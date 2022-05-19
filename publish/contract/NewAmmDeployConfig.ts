@@ -42,12 +42,12 @@ export const NEW_USD_AMM: AmmConfig = {
             .mul(DEFAULT_DIGITS)
             .div(1000), // 0%
         priceFeedKey: NEW_PRICE_FEED_KEY,
-        tollRatio: BigNumber.from(0)
-            .mul(DEFAULT_DIGITS)
-            .div(10000), // 0.0%
-        spreadRatio: BigNumber.from(10)
+        tollRatio: BigNumber.from(10)
             .mul(DEFAULT_DIGITS)
             .div(10000), // 0.1%
+        spreadRatio: BigNumber.from(0)
+            .mul(DEFAULT_DIGITS)
+            .div(10000), // 0.0%
     },
     properties: {
         maxHoldingBaseAsset: DEFAULT_DIGITS.mul(0), // 0 NEW TOKEN ~= $0 USD
