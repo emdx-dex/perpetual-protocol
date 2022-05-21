@@ -995,7 +995,7 @@ contract ClearingHouse is DecimalERC20, OwnerPausableUpgradeSafe, ReentrancyGuar
             if (hasToll) {
                 require(address(feePool) != address(0), "Invalid FeePool");
                 _transferFrom(quoteAsset, _from, address(feePool), toll);
-                feePool.notifyTokenAmount(quoteAsset, toll);
+                //feePool.notifyTokenAmount(quoteAsset, toll);
             }
 
             // fee = spread + toll
