@@ -1,2 +1,2 @@
-# values: dev, local, staging, dev-new-amm, staging-new-amm
+# values: dev, local, staging, production, dev-new-amm, staging-new-amm, production-new-amm
 stage=dev

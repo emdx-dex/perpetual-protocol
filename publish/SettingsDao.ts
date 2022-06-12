@@ -2,6 +2,7 @@
 import { ShellString } from "shelljs"
 import { ExternalContracts, Layer, Network, Stage, SystemDeploySettings } from "../scripts/common"
 import production from "./settings/production.json"
+import productionNewAmm from "./settings/production-new-amm.json"
 import staging from "./settings/staging.json"
 import devNewAmm from "./settings/dev-new-amm.json"
 import stagingNewAmm from "./settings/staging-new-amm.json"
@@ -13,6 +14,9 @@ export class SettingsDao {
         switch (stage) {
             case "production":
                 this.settingsCached = production as SystemDeploySettings
+                break
+            case "production-new-amm":
+                this.settingsCached = productionNewAmm as SystemDeploySettings
                 break
             case "staging":
                 this.settingsCached = staging as SystemDeploySettings

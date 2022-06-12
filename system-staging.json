@@ -1,16 +1,6 @@
 {
   "layers": {
     "layer1": {
-      "contracts": {},
-      "accounts": [],
-      "network": "fuji",
-      "externalContracts": {
-        "foundationGovernance": "0xfE5E335363f0B95e5Ce15040976c6Cbab331491a",
-        "ambBridgeOnEth": "0xcE515F72164b1D1d4EE88cfA6188B4DeD344879e",
-        "multiTokenMediatorOnEth": "0x317a38F732bEc36A1e43e634C5389B939BD6E2e3",
-        "usdc": "0x0f2A5D18aD37395266c0b59e3dfCFe790a0EE8E1",
-        "perp": "0xc8B98E0e1E095312dDBC372C2D7cFEC3073B4E51"
-      }
     },
     "layer2": {
       "contracts": {
@@ -36,11 +26,11 @@
         },
         "ETHUSDC": {
           "name": "Amm",
-          "address": "0x0C89d87f8781bFB96ceA3456b5F7C2C9684a0726"
+          "address": "0xAEEc4F0AEb6ecadAEeE9824E5664AA476f21499c"
         },
         "BTCUSDC": {
           "name": "Amm",
-          "address": "0x08C3069541913775A246e9e5db3ecFA13763BB68"
+          "address": "0x85Ad3205B50b543e101f980E1eAed8079C4C3557"
         },
         "ClearingHouseViewer": {
           "name": "ClearingHouseViewer",
@@ -52,18 +42,14 @@
         },
         "AVAXUSDC": {
           "name": "Amm",
-          "address": "0xF888213c6430B096468abd456840A0bEf2b9D242"
-        },
-        "XAVAUSDT": {
-          "name": "Amm",
-          "address": "0x7322f93d502F914c7B7360CF8d1889f7416749c8"
+          "address": "0xc259db66AAf21cAeBCE5C3cd2A429C09d1c7bDfe"
         }
       },
       "accounts": [],
       "network": "fuji",
       "externalContracts": {
         "foundationGovernance": "0xfE5E335363f0B95e5Ce15040976c6Cbab331491a",
-        "usdc": "0x0f2A5D18aD37395266c0b59e3dfCFe790a0EE8E1"
+        "usdc": "0x5A0d0B5f9aAD08EA771c783D45Ca20ca803da44B"
       }
     }
   }
