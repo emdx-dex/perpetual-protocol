@@ -1,8 +1,55 @@
 {
   "layers": {
-    "layer1": {
-    },
     "layer2": {
+      "contracts": {
+        "InsuranceFund": {
+          "name": "InsuranceFund",
+          "address": "0x80ce46804010C03387a13E27729c5FBb6a309105"
+        },
+        "Ark": {
+          "name": "Ark",
+          "address": "0x3B065b08AAe6e29972058096cfA77E196590784a"
+        },
+        "L2PriceFeed": {
+          "name": "L2PriceFeed",
+          "address": "0x5664c0250D0779110e921A3DF9Adb41Cbc7fd8aC"
+        },
+        "ChainlinkL1": {
+          "name": "ChainlinkL1",
+          "address": "0x11f6384dD7C5Ca1e9D5eA15147a1C445b73D5cf4"
+        },
+        "ClearingHouse": {
+          "name": "ClearingHouse",
+          "address": "0xBFB083840b0507670b92456264164E5fecd0430B"
+        },
+        "ClearingHouseViewer": {
+          "name": "ClearingHouseViewer",
+          "address": "0x43Bd336f439C8fB5d1FB8f501409578997eb3bD8"
+        },
+        "AmmReader": {
+          "name": "AmmReader",
+          "address": "0x99247b6f5613B7Ce5633b35EACD243bDF4442c8E"
+        },
+        "AVAXUSDC": {
+          "name": "Amm",
+          "address": "0x5Ae3D59b80Ba9B488D1f1Fcf10574DAb12fa4D59"
+        },
+        "BTCUSDC": {
+          "name": "Amm",
+          "address": "0xda09E84d9850777686604B256F5249c884daE7f3"
+        },
+        "ETHUSDC": {
+          "name": "Amm",
+          "address": "0x534e06810577b73CaF3dA5AE8D6F42d9DC149d42"
+        }
+      },
+      "accounts": [],
+      "network": "avax",
+      "externalContracts": {
+        "foundationGovernance": "",
+        "arbitrageur": "",
+        "usdc": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+      }
     }
   }
 }
