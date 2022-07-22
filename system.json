@@ -32,15 +32,15 @@
         },
         "AVAXUSDC": {
           "name": "Amm",
-          "address": "0x5Ae3D59b80Ba9B488D1f1Fcf10574DAb12fa4D59"
+          "address": "0x8913a3546D48cA3095fDA50cbeCB5388c0EcC3D4"
         },
         "BTCUSDC": {
           "name": "Amm",
-          "address": "0xda09E84d9850777686604B256F5249c884daE7f3"
+          "address": "0x46E522c0e6BFcf28487100c0A24A9eddECA8ef19"
         },
         "ETHUSDC": {
           "name": "Amm",
-          "address": "0x534e06810577b73CaF3dA5AE8D6F42d9DC149d42"
+          "address": "0xC7b13ECFd25E2E792ec17337A42c150055415dEa"
         }
       },
       "accounts": [],
