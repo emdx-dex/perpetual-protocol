@@ -41,6 +41,10 @@
         "ETHUSDC": {
           "name": "Amm",
           "address": "0xC7b13ECFd25E2E792ec17337A42c150055415dEa"
+        },
+        "SAVAXUSDC": {
+          "name": "Amm",
+          "address": "0x118FfBbA2a9872Fd545f1dD763276c9FCaA30DC3"
         }
       },
       "accounts": [],
