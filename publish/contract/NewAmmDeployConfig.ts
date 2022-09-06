@@ -1,9 +1,12 @@
-import { BigNumber } from "ethers"
+import { BigNumber, utils } from "ethers"
 import {
     NEW_PRICE_FEED_KEY,
     NEW_AGGREGATOR_ADDRESS,
     NEW_QUOTE_ASSET_RESERVE,
-    NEW_BASE_ASSET_RESERVE
+    NEW_BASE_ASSET_RESERVE,
+    NEW_FLUCTUATION_LIMIT_RATIO,
+    NEW_MAX_HOLDING_BASE_ASSET,
+    NEW_OPEN_INTEREST_NOTIONAL_CAP
 } from "../../constants"
 
 // TODO replace by ethers format
@@ -38,8 +41,7 @@ export const NEW_USD_AMM: AmmConfig = {
             .mul(DEFAULT_DIGITS)
             .div(100), // 0% trading limit ratio
         fundingPeriod: BigNumber.from(3600), // 1 hour
-        fluctuation: BigNumber.from(0)
-            .mul(DEFAULT_DIGITS)
+        fluctuation: utils.parseEther(NEW_FLUCTUATION_LIMIT_RATIO)
             .div(1000), // 0%
         priceFeedKey: NEW_PRICE_FEED_KEY,
         tollRatio: BigNumber.from(10)
@@ -50,8 +52,8 @@ export const NEW_USD_AMM: AmmConfig = {
             .div(10000), // 0.0%
     },
     properties: {
-        maxHoldingBaseAsset: DEFAULT_DIGITS.mul(0), // 0 NEW TOKEN ~= $0 USD
-        openInterestNotionalCap: BigNumber.from(DEFAULT_DIGITS).mul(0), // $500K
+        maxHoldingBaseAsset: utils.parseEther(NEW_MAX_HOLDING_BASE_ASSET), // 0 NEW TOKEN ~= $0 USD
+        openInterestNotionalCap: utils.parseEther(NEW_OPEN_INTEREST_NOTIONAL_CAP), // $500K
     },
 }
 

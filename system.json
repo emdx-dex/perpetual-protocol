@@ -45,6 +45,10 @@
         "SAVAXUSDC": {
           "name": "Amm",
           "address": "0x118FfBbA2a9872Fd545f1dD763276c9FCaA30DC3"
+        },
+        "ARSUSDC": {
+          "name": "Amm",
+          "address": "0xCA027Fd3C4d3377B60783D4b3e54A64fa3d7969A"
         }
       },
       "accounts": [],

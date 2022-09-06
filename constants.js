@@ -36,4 +36,7 @@ module.exports = {
     NEW_INSTANCE_PRICE: `${process.env["NEW_INSTANCE_PRICE"]}` || "",
     NEW_QUOTE_ASSET_RESERVE: `${process.env["NEW_QUOTE_ASSET_RESERVE"]}` || "",
     NEW_BASE_ASSET_RESERVE: `${process.env["NEW_BASE_ASSET_RESERVE"]}` || "",
+    NEW_FLUCTUATION_LIMIT_RATIO: `${process.env["NEW_FLUCTUATION_LIMIT_RATIO"]}` || "",
+    NEW_MAX_HOLDING_BASE_ASSET: `${process.env["NEW_MAX_HOLDING_BASE_ASSET"]}` || "",
+    NEW_OPEN_INTEREST_NOTIONAL_CAP: `${process.env["NEW_OPEN_INTEREST_NOTIONAL_CAP"]}` || "",
 }

@@ -29,3 +29,6 @@ export declare const NEW_INSTANCE_NAME: string
 export declare const NEW_INSTANCE_PRICE: string
 export declare const NEW_BASE_ASSET_RESERVE: string
 export declare const NEW_QUOTE_ASSET_RESERVE: string
+export declare const NEW_FLUCTUATION_LIMIT_RATIO: string
+export declare const NEW_MAX_HOLDING_BASE_ASSET: string
+export declare const NEW_OPEN_INTEREST_NOTIONAL_CAP: string
