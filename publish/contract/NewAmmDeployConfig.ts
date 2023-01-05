@@ -42,7 +42,7 @@ export const NEW_USD_AMM: AmmConfig = {
             .div(100), // 0% trading limit ratio
         fundingPeriod: BigNumber.from(3600), // 1 hour
         fluctuation: utils.parseEther(NEW_FLUCTUATION_LIMIT_RATIO)
-            .div(1000), // 0%
+            .div(100), // 0%
         priceFeedKey: NEW_PRICE_FEED_KEY,
         tollRatio: BigNumber.from(10)
             .mul(DEFAULT_DIGITS)
