@@ -32,7 +32,7 @@
         },
         "AVAXUSDC": {
           "name": "Amm",
-          "address": "0xd4fc38320379a4bcA5A678d730847f1C323fD29b"
+          "address": "0x3cF47469298B1630c192b2C8D3Ffa087ABCAc8b2"
         },
         "BTCUSDC": {
           "name": "Amm",
