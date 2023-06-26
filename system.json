@@ -32,15 +32,15 @@
         },
         "AVAXUSDC": {
           "name": "Amm",
-          "address": "0x3cF47469298B1630c192b2C8D3Ffa087ABCAc8b2"
+          "address": "0xF71B1094d591506F83f6f7194eeaE7C587e772b0"
         },
         "BTCUSDC": {
           "name": "Amm",
-          "address": "0xb56Ca79dCe0f05244bd656b75bB6e46C59BF1e76"
+          "address": "0x40d918F5cb7479F1B51ABF12Ae33Ae343BA8d366"
         },
         "ETHUSDC": {
           "name": "Amm",
-          "address": "0x1064F8e94FF95209Cb1F155298791A5B7cf00973"
+          "address": "0xA9B3B76e33b95239Df7163B0D9763fF24c20e6E1"
         },
         "SAVAXUSDC": {
           "name": "Amm",
@@ -48,7 +48,7 @@
         },
         "ARSUSDC": {
           "name": "Amm",
-          "address": "0xCA027Fd3C4d3377B60783D4b3e54A64fa3d7969A"
+          "address": "0x11Cb13816E33Db898da12E88b13740A11d01c9AE"
         }
       },
       "accounts": [],

@@ -3,7 +3,7 @@
     "layer2": {
       "chainId": 43114,
       "network": "avax",
-      "version": "0",
+      "version": "5",
       "externalContracts": {
         "foundationGovernance": "",
         "arbitrageur": "",
