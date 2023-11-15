@@ -4,59 +4,43 @@
       "contracts": {
         "InsuranceFund": {
           "name": "InsuranceFund",
-          "address": "0x80ce46804010C03387a13E27729c5FBb6a309105"
+          "address": "0x741887c6D9623e148fEA3dfd5938619279FcE8C6"
         },
         "Ark": {
           "name": "Ark",
-          "address": "0x3B065b08AAe6e29972058096cfA77E196590784a"
+          "address": "0x54d2Ce3a61efa8941896926728B9300692F2CD40"
         },
         "L2PriceFeed": {
           "name": "L2PriceFeed",
-          "address": "0x5664c0250D0779110e921A3DF9Adb41Cbc7fd8aC"
+          "address": "0x912082e3B4A35821b839E6B728736D80762286DA"
         },
         "ChainlinkL1": {
           "name": "ChainlinkL1",
-          "address": "0x11f6384dD7C5Ca1e9D5eA15147a1C445b73D5cf4"
+          "address": "0xf728A73Db5ec19B9d6C788b70577630dE2Eb1420"
         },
         "ClearingHouse": {
           "name": "ClearingHouse",
-          "address": "0xBFB083840b0507670b92456264164E5fecd0430B"
+          "address": "0xBc1d7e85A4e9f7D9600c7bCB94F6Ce5C9DD48Fc3"
         },
         "ClearingHouseViewer": {
           "name": "ClearingHouseViewer",
-          "address": "0x43Bd336f439C8fB5d1FB8f501409578997eb3bD8"
+          "address": "0x0831fe5A91D704731968118B5e210b0593E42DCe"
         },
         "AmmReader": {
           "name": "AmmReader",
-          "address": "0x99247b6f5613B7Ce5633b35EACD243bDF4442c8E"
-        },
-        "AVAXUSDC": {
-          "name": "Amm",
-          "address": "0xF71B1094d591506F83f6f7194eeaE7C587e772b0"
-        },
-        "BTCUSDC": {
-          "name": "Amm",
-          "address": "0x40d918F5cb7479F1B51ABF12Ae33Ae343BA8d366"
-        },
-        "ETHUSDC": {
-          "name": "Amm",
-          "address": "0xA9B3B76e33b95239Df7163B0D9763fF24c20e6E1"
-        },
-        "SAVAXUSDC": {
-          "name": "Amm",
-          "address": "0x118FfBbA2a9872Fd545f1dD763276c9FCaA30DC3"
+          "address": "0xCfdd5eee6662343bfa4e71644F2dD6B0905011cC"
         },
         "ARSUSDC": {
           "name": "Amm",
-          "address": "0x11Cb13816E33Db898da12E88b13740A11d01c9AE"
+          "address": "0x4a9522377cff9580f842733307951C853143226B"
         }
       },
       "accounts": [],
-      "network": "avax",
+      "network": "emdxMain",
       "externalContracts": {
         "foundationGovernance": "",
-        "arbitrageur": "",
-        "usdc": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+        "arbitrageur": "0xd5528eE791Ac475779d970cE389418548d1443bD",
+        "usdc": "0x5478D830a83B679ead233c9DB7717508DFB38590"
       }
     }
   }

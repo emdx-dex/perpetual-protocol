@@ -90,14 +90,14 @@ export class ContractPublisher {
                     const ethUsdc = await this.factory.createAmm(NEW_INSTANCE_NAME).instance()
                     await (await ethUsdc.setOpen(true)).wait(this.confirmations)
                 },
-                async (): Promise<void> => {
-                    const gov = this.externalContract.foundationGovernance!
-                    console.log(
-                        `transferring ${NEW_INSTANCE_NAME} owner to governance=${gov}...please remember to claim the ownership`,
-                    )
-                    const PAIR = await this.factory.createAmm(NEW_INSTANCE_NAME).instance()
-                    await (await PAIR.setOwner(gov)).wait(this.confirmations)
-                },
+                //async (): Promise<void> => {
+                //    const gov = this.externalContract.foundationGovernance!
+                //    console.log(
+                //        `transferring ${NEW_INSTANCE_NAME} owner to governance=${gov}...please remember to claim the ownership`,
+                //    )
+                //    const PAIR = await this.factory.createAmm(NEW_INSTANCE_NAME).instance()
+                //    await (await PAIR.setOwner(gov)).wait(this.confirmations)
+                //},
             ]
 
         ],

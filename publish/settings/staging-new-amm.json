@@ -1,12 +1,12 @@
 {
   "layers": {
     "layer2": {
-      "chainId": 43113,
-      "network": "fuji",
+      "chainId": 798991,
+      "network": "emdxTest",
       "version": "0",
       "externalContracts": {
-        "foundationGovernance": "0xfE5E335363f0B95e5Ce15040976c6Cbab331491a",
-        "usdc": "0x5A0d0B5f9aAD08EA771c783D45Ca20ca803da44B"
+        "foundationGovernance": "",
+        "usdc": ""
       }
     }
   }

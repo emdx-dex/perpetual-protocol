@@ -14,6 +14,10 @@ export declare const XDAI_URL: string
 export declare const XDAI_PK: string
 export declare const AVAX_URL: string
 export declare const AVAX_PK: string
+export declare const EMDX_TESTNET_URL: string
+export declare const EMDX_TESTNET_PK: string
+export declare const EMDX_MAINNET_URL: string
+export declare const EMDX_MAINNET_PK: string
 export declare const FUJI_URL: string
 export declare const FUJI_PK: string
 export declare const GAS: number

@@ -1,13 +1,13 @@
 {
   "layers": {
     "layer2": {
-      "chainId": 43114,
-      "network": "avax",
-      "version": "5",
+      "chainId": 798992,
+      "network": "emdxMain",
+      "version": "0",
       "externalContracts": {
         "foundationGovernance": "",
-        "arbitrageur": "",
-        "usdc": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E"
+        "arbitrageur": "0xd5528eE791Ac475779d970cE389418548d1443bD",
+        "usdc": "0x5478D830a83B679ead233c9DB7717508DFB38590"
       }
     }
   }

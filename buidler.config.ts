@@ -1,8 +1,8 @@
 import { TASK_COMPILE, TASK_COMPILE_GET_COMPILER_INPUT } from "@nomiclabs/buidler/builtin-tasks/task-names"
 import { task, usePlugin } from "@nomiclabs/buidler/config"
 import {
-    ARTIFACTS_DIR, AVAX_PK, AVAX_URL, FUJI_PK, FUJI_URL,
-    COVERAGE_URL,
+    ARTIFACTS_DIR, AVAX_PK, EMDX_TESTNET_PK, EMDX_TESTNET_URL, AVAX_URL, FUJI_PK, FUJI_URL,
+    COVERAGE_URL, EMDX_MAINNET_PK, EMDX_MAINNET_URL,
     ETHERSCAN_API_KEY,
     GAS_PRICE, HOMESTEAD_PK, HOMESTEAD_URL,
     KOVAN_PK, KOVAN_URL, RINKEBY_PK, RINKEBY_URL, ROPSTEN_PK, ROPSTEN_URL, SOKOL_PK, SOKOL_URL,
@@ -97,6 +97,16 @@ const config = {
             url: AVAX_URL,
             gasPrice: Number(GAS_PRICE),
             accounts: [AVAX_PK],
+        },
+        emdxTest: {
+            url: EMDX_TESTNET_URL,
+            gasPrice: Number(GAS_PRICE),
+            accounts: [EMDX_TESTNET_PK],
+        },
+        emdxMain: {
+            url: EMDX_MAINNET_URL,
+            gasPrice: Number(GAS_PRICE),
+            accounts: [EMDX_MAINNET_PK],
         },
         fuji: {
             url: FUJI_URL,
